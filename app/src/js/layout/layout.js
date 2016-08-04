@@ -40,9 +40,10 @@ export default class Layout extends React.Component {
 						</ul>
 					</nav>
 				</header>
-				<main>
-					{this.props.children}
-				</main>
+				{
+					// page content
+					this.props.children
+				}
 				<footer className="globalFooter">
 					<small>&copy; 2016 Phil Gibbins</small>
 				</footer>

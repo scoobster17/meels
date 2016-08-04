@@ -3,7 +3,7 @@ import React from 'react';
 export default class HomePage extends React.Component {
 	render() {
 		return (
-			<div>
+			<main>
 				<h1>Meels</h1>
 				<p>A recipe book to store all your favourite meals, or meels.</p>
 				<h2>Categories</h2>
@@ -14,7 +14,7 @@ export default class HomePage extends React.Component {
 				</ul>
 				<a href="#">Add recipe</a>
 				<a href="#">Add category</a>
-			</div>
+			</main>
 		)
 	}
 }

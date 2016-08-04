@@ -1,18 +1,16 @@
 import React from 'react';
-import RecipePreview from '../components/recipe-preview';
+import RecipeList from '../components/recipe-list';
 
 export default class ListPage extends React.Component {
 	render() {
 		return (
-			<div>
+			<main>
 				<h1>Recipes</h1>
 				<p>Here are all the recipes you have saved in your recipe book.</p>
-				<ul>
-					<RecipePreview />
-				</ul>
+				<RecipeList />
 				<a href="#">Add recipe</a>
 				<a href="#">Add category</a>
-			</div>
+			</main>
 		)
 	}
 }

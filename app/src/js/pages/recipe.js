@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 export default class RecipePage extends React.Component {
 	render() {
 		return (
-			<div>
+			<main>
 				<h1>Recipe Name</h1>
 				<p>Short description.</p>
 				<h2>Method / Instructions</h2>
@@ -21,7 +21,7 @@ export default class RecipePage extends React.Component {
 				<Link to="/list">
 					Back to recipes
 				</Link>
-			</div>
+			</main>
 		)
 	}
 }
