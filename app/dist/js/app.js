@@ -52,7 +52,7 @@ var app = _react2.default.createElement(
 		{ path: '/', component: _layout2.default },
 		_react2.default.createElement(_reactRouter.Route, { path: 'home', component: _home2.default }),
 		_react2.default.createElement(_reactRouter.Route, { path: 'list', component: _list2.default }),
-		_react2.default.createElement(_reactRouter.Route, { path: 'recipe', component: _recipe2.default }),
+		_react2.default.createElement(_reactRouter.Route, { path: 'recipe/:recipeId', component: _recipe2.default }),
 		_react2.default.createElement(_reactRouter.Route, { path: 'newRecipe', component: _add2.default })
 	)
 );
@@ -102,11 +102,21 @@ var RecipeList = function (_React$Component) {
 	_createClass(RecipeList, [{
 		key: 'render',
 		value: function render() {
+			var recipes = this._getRecipes();
 			return _react2.default.createElement(
 				'ul',
 				null,
-				_react2.default.createElement(_recipePreview2.default, null)
+				recipes
 			);
+		}
+	}, {
+		key: '_getRecipes',
+		value: function _getRecipes() {
+			var recipesList = [{ id: 1, name: 'Spaghetti Bolognese', categories: ["Italian"] }, { id: 2, name: 'Chicken Madras', categories: ["Indian", "Curry"] }];
+
+			return recipesList.map(function (recipe) {
+				return _react2.default.createElement(_recipePreview2.default, { name: recipe.name, tags: recipe.categories, key: recipe.id, id: recipe.id });
+			});
 		}
 	}]);
 
@@ -155,9 +165,14 @@ var RecipePreview = function (_React$Component) {
 				null,
 				_react2.default.createElement(
 					_reactRouter.Link,
-					{ to: '/recipe' },
-					'Recipe Name',
-					_react2.default.createElement('img', { src: 'assets/img/recipes/hotdog.jpg', width: '60' })
+					{ to: '/recipe/' + this.props.id },
+					this.props.name,
+					_react2.default.createElement('img', { src: 'assets/img/recipes/hotdog.jpg', width: '60' }),
+					_react2.default.createElement(
+						'p',
+						null,
+						this.props.tags
+					)
 				)
 			);
 		}
@@ -538,13 +553,18 @@ var RecipePage = function (_React$Component) {
 	_createClass(RecipePage, [{
 		key: 'render',
 		value: function render() {
+
+			var recipeToFindId = this.props.params.recipeId;
+
+			var recipe = this._getRecipeDetails(recipeToFindId);
+
 			return _react2.default.createElement(
 				'main',
 				null,
 				_react2.default.createElement(
 					'h1',
 					null,
-					'Recipe Name'
+					recipe.name
 				),
 				_react2.default.createElement(
 					'p',
@@ -586,6 +606,16 @@ var RecipePage = function (_React$Component) {
 					'Back to recipes'
 				)
 			);
+		}
+	}, {
+		key: '_getRecipeDetails',
+		value: function _getRecipeDetails(recipeToFindId) {
+			var recipesList = [{ id: 1, name: 'Spaghetti Bolognese', categories: ["Italian"] }, { id: 2, name: 'Chicken Madras', categories: ["Indian", "Curry"] }];
+
+			var matchingRecipes = recipesList.filter(function (recipe) {
+				return recipe.id == recipeToFindId;
+			});
+			return matchingRecipes[0];
 		}
 	}]);
 

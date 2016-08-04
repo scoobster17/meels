@@ -5,9 +5,10 @@ export default class RecipePreview extends React.Component {
 	render() {
 		return (
 			<li>
-				<Link to="/recipe">
-					Recipe Name
+				<Link to={'/recipe/' + this.props.id}>
+					{this.props.name}
 					<img src="assets/img/recipes/hotdog.jpg" width="60" />
+					<p>{this.props.tags}</p>
 				</Link>
 			</li>
 		)

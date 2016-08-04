@@ -26,7 +26,7 @@ const app = (
 		<Route path="/" component={Layout}>
 			<Route path="home" component={HomePage} />
 			<Route path="list" component={ListPage} />
-			<Route path="recipe" component={RecipePage} />
+			<Route path="recipe/:recipeId" component={RecipePage} />
 			<Route path="newRecipe" component={AddPage} />
 		</Route>
 	</Router>
