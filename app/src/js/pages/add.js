@@ -9,7 +9,6 @@ export default class AddPage extends React.Component {
 					<label htmlFor="">Recipe Name</label>
 					<input type="text" />
 				</form>
-				<a href="#">Add recipe</a>
 				<a href="#">Add category</a>
 			</div>
 		)

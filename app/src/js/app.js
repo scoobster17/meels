@@ -13,6 +13,7 @@ import Layout from './layout/layout';
 // Pages
 import HomePage from './pages/home';
 import ListPage from './pages/list';
+import RecipePage from './pages/recipe';
 import AddPage from './pages/add';
 
 /******************************************************************************/
@@ -24,7 +25,8 @@ const app = (
 		<Redirect from="/" to="/home" />
 		<Route path="/" component={Layout}>
 			<Route path="home" component={HomePage} />
-			<Route path="recipes" component={ListPage} />
+			<Route path="list" component={ListPage} />
+			<Route path="recipe" component={RecipePage} />
 			<Route path="newRecipe" component={AddPage} />
 		</Route>
 	</Router>

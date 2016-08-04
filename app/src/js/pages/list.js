@@ -1,4 +1,5 @@
 import React from 'react';
+import RecipePreview from '../components/recipe-preview';
 
 export default class ListPage extends React.Component {
 	render() {
@@ -7,9 +8,7 @@ export default class ListPage extends React.Component {
 				<h1>Recipes</h1>
 				<p>Here are all the recipes you have saved in your recipe book.</p>
 				<ul>
-					<li>
-						<a href="#">Recipe 1</a>
-					</li>
+					<RecipePreview />
 				</ul>
 				<a href="#">Add recipe</a>
 				<a href="#">Add category</a>

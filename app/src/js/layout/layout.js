@@ -16,7 +16,10 @@ export default class Layout extends React.Component {
 		return (
 			<div>
 				<header className="globalHeader">
-					<a href="#">Meels</a>
+					<a href="#">
+						<img src="assets/img/logo.jpg" width="60" />
+						Meels
+					</a>
 					<nav className="globalNav">
 						<ul>
 							<li>
@@ -25,7 +28,7 @@ export default class Layout extends React.Component {
 								</Link>
 							</li>
 							<li>
-								<Link to="/recipes">
+								<Link to="/list">
 									Recipes
 								</Link>
 							</li>
