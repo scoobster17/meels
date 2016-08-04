@@ -14,16 +14,23 @@
 // gulp itself
 var gulp = require('gulp');
 
+// utilities
+var fs = require('fs');
+
 // css
 var sass = require('gulp-sass');
 
 // js
 var babel = require('gulp-babel');
+var eslint = require('gulp-eslint');
 
 // compilation utilities
-var watch = require('gulp-watch');
 var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat');
+var browserify = require('browserify');
+
+// helpers
+var watch = require('gulp-watch');
 
 // server
 // var spawn = require('child_process').spawn;
@@ -44,11 +51,11 @@ var concat = require('gulp-concat');
  * Task to compile Sass
  */
 gulp.task('sass', function() {
-	return gulp.src('./app/css/**/*.scss')
+	return gulp.src('./app/src/css/**/*.scss')
 		.pipe(sourcemaps.init())
 		.pipe(sass().on('error', sass.logError))
 		.pipe(sourcemaps.write())
-		.pipe(gulp.dest('./app/css'));
+		.pipe(gulp.dest('./app/dist/css'));
 });
 
 /* ************************************************************************** */
@@ -57,13 +64,31 @@ gulp.task('sass', function() {
 
 // to add source maps
 
-gulp.task("js", function () {
-  return gulp.src("app/js/**/*.babel.js")
+/*gulp.task("js", ['eslint'], function () {
+  return gulp.src("app/js/** /*.babel.js")
   	.pipe(sourcemaps.init())
     .pipe(babel())
     .pipe(concat("app.js"))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest("app/js"));
+});*/
+
+gulp.task("js", ['eslint'], function () {
+  browserify("app/src/js/app.js")
+  	//.pipe(sourcemaps.init())
+    //.pipe(babel())
+    .transform('babelify', {presets: ["es2015", "react"]})
+    .bundle()
+    //.pipe(concat("app.js"))
+    //.pipe(sourcemaps.write())
+    .pipe(fs.createWriteStream("app/dist/js/app.js"));
+});
+
+// es2015 linting
+gulp.task('eslint', function() {
+	return gulp.src(['app/src/js/**/*.babel.js'])
+		.pipe(eslint())
+		.pipe(eslint.format());
 });
 
 /* ************************************************************************** */
@@ -76,12 +101,12 @@ gulp.task("js", function () {
 gulp.task('watch', function() {
 
 	// watch for css changes
-	watch(['app/css/**/*.scss'], function() {
+	watch(['app/src/css/**/*.scss'], function() {
 		gulp.start('sass');
 	});
 
 	// watch for js changes
-	watch(['app/js/**/*.babel.js'], function() {
+	watch(['app/src/js/**/*.js'], function() {
 		gulp.start('js');
 	});
 

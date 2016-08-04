@@ -1,3 +1,0 @@
-(x) => {
-	console.log(x);
-}

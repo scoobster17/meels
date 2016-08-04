@@ -1,0 +1,12 @@
+.globalHeader {
+	border-bottom:1px solid black;
+	overflow:hidden;
+	padding:20px;
+	> a {
+		border-right:1px solid black;
+		display: block;
+		float:left;
+		margin:0 20px 0 0;
+		padding:20px;
+	}
+}
