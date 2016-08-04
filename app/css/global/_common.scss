@@ -1,0 +1,22 @@
+body {
+	font-size: 62.5%;
+}
+main {
+	padding:20px;
+}
+h1 {
+	font-size: 4em;
+}
+p {
+	font-size:1.6em;
+	+ p {
+		margin:1em 0 0;
+	}
+}
+li {
+	font-size: 1.6em;
+}
+// to be revised
+a {
+	font-size:1.6em;
+}

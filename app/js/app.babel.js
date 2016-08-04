@@ -1,0 +1,3 @@
+(x) => {
+	console.log(x);
+}
