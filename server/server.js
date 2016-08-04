@@ -14,6 +14,9 @@ var app = express();
 
 app.use( express.static(__dirname + "/../app") );
 
+app.use(express.static('data'));
+app.use('/data', express.static('data'));
+
 // app.use(express.static('bower_components'));
 // app.use('/bower_components', express.static('bower_components'));
 

@@ -1,7 +1,7 @@
 {
 	"recipes": [
-		{
-			"name": "Recipe 1"
-		}
+		{ "id": 1, "name": "Spaghetti Bolognese", "categories": ["Italian"] },
+		{ "id": 2, "name": "Chicken Madras", "categories": ["Indian", "Curry"] },
+		{ "id": 3, "name": "Fish and Chips", "categories": ["Fish"] }
 	]
 }
