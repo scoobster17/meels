@@ -50,7 +50,7 @@ export default class RecipePage extends React.Component {
 
 		jQuery.ajax({
 			method: 'GET',
-			url: "data/recipe/" + recipeToFindId + ".json",
+			url: "https://meels-f1766.firebaseio.com/recipes/" + recipeToFindId + ".json",
 			success: (recipeObj) => {
 
 				this.setState({

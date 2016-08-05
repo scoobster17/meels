@@ -120,16 +120,14 @@ var RecipeList = function (_React$Component) {
 
 			_jquery2.default.ajax({
 				method: 'GET',
-				url: 'data/recipes.json',
+				url: 'https://meels-f1766.firebaseio.com/recipes.json',
 				success: function success(recipesObj) {
 
 					_this2.setState({
-						recipes: recipesObj.recipes.map(function (recipe) {
+						recipes: recipesObj.map(function (recipe) {
 							return _react2.default.createElement(_recipePreview2.default, { name: recipe.name, tags: recipe.categories, key: recipe.id, id: recipe.id });
 						})
 					});
-
-					// return recipesList;
 				}
 			});
 		}
@@ -650,7 +648,7 @@ var RecipePage = function (_React$Component) {
 
 			_jquery2.default.ajax({
 				method: 'GET',
-				url: "data/recipe/" + recipeToFindId + ".json",
+				url: "https://meels-f1766.firebaseio.com/recipes/" + recipeToFindId + ".json",
 				success: function success(recipeObj) {
 
 					_this2.setState({

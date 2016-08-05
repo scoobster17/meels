@@ -23,18 +23,17 @@ export default class RecipeList extends React.Component {
 
 		jQuery.ajax({
 			method: 'GET',
-			url: 'data/recipes.json',
+			url: 'https://meels-f1766.firebaseio.com/recipes.json',
 			success: (recipesObj) => {
 
 				this.setState({
-					recipes: recipesObj.recipes.map((recipe) => {
+					recipes: recipesObj.map((recipe) => {
 						return (
 							<RecipePreview name={recipe.name} tags={recipe.categories} key={recipe.id} id={recipe.id} />
 						)
 					})
 				});
 
-				// return recipesList;
 			}
 		});
 
