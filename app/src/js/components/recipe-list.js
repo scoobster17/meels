@@ -9,7 +9,8 @@ export default class RecipeList extends React.Component {
 		super();
 
 		this.state = {
-			recipes: []
+			recipes: [],
+			noOfRecipes: 0
 		}
 	}
 
@@ -31,7 +32,8 @@ export default class RecipeList extends React.Component {
 						return (
 							<RecipePreview name={recipe.name} tags={recipe.categories} key={recipe.id} id={recipe.id} />
 						)
-					})
+					}),
+					noOfRecipes: recipesObj.length
 				});
 
 			}

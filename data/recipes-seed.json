@@ -1,0 +1,33 @@
+{
+	"recipes": {
+		"0": {
+			"id": 0,
+			"name": "Spaghetti Bolognese",
+			"tags": {
+				"0": "Italian"
+			}
+		},
+		"1": {
+			"id": 1,
+			"name": "Chicken Madras",
+			"tags": {
+				"0": "Indian",
+				"1": "Curry"
+			}
+		},
+		"2": {
+			"id": 2,
+			"name": "Fish and Chips",
+			"tags": {
+				"0": "Fish"
+			}
+		},
+		"3": {
+			"id": 3,
+			"name": "BBQ Chicken Pizza",
+			"tags": {
+				"0": "Italian"
+			}
+		}
+	}
+}

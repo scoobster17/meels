@@ -57,7 +57,6 @@ export default class RecipePage extends React.Component {
 					recipe: recipeObj
 				});
 
-				// return recipesList;
 			}
 		});
 	}

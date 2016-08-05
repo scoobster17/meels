@@ -103,7 +103,8 @@ var RecipeList = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RecipeList).call(this));
 
 		_this.state = {
-			recipes: []
+			recipes: [],
+			noOfRecipes: 0
 		};
 		return _this;
 	}
@@ -126,7 +127,8 @@ var RecipeList = function (_React$Component) {
 					_this2.setState({
 						recipes: recipesObj.map(function (recipe) {
 							return _react2.default.createElement(_recipePreview2.default, { name: recipe.name, tags: recipe.categories, key: recipe.id, id: recipe.id });
-						})
+						}),
+						noOfRecipes: recipesObj.length
 					});
 				}
 			});
@@ -324,7 +326,7 @@ var Layout = function (_React$Component) {
 exports.default = Layout;
 
 },{"react":246,"react-dom":11,"react-router":41}],5:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
@@ -332,9 +334,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -350,36 +356,114 @@ var AddPage = function (_React$Component) {
 	function AddPage() {
 		_classCallCheck(this, AddPage);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(AddPage).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AddPage).call(this));
+
+		_this.state = {
+			noOfRecipes: 0
+		};
+		_this._saveRecipe = _this._saveRecipe.bind(_this);
+		return _this;
 	}
 
 	_createClass(AddPage, [{
-		key: "render",
+		key: 'componentWillMount',
+		value: function componentWillMount() {
+			this._getRecipes();
+		}
+	}, {
+		key: 'render',
 		value: function render() {
+			var _this2 = this;
+
 			return _react2.default.createElement(
-				"main",
+				'main',
 				null,
 				_react2.default.createElement(
-					"h1",
+					'h1',
 					null,
-					"Add a new recipe"
+					'Add a new recipe'
 				),
 				_react2.default.createElement(
-					"form",
-					null,
+					'form',
+					{ onSubmit: this._saveRecipe },
 					_react2.default.createElement(
-						"label",
-						{ htmlFor: "" },
-						"Recipe Name"
+						'label',
+						{ htmlFor: '' },
+						'Recipe Name'
 					),
-					_react2.default.createElement("input", { type: "text" })
+					_react2.default.createElement('input', { type: 'text', ref: function ref(input) {
+							_this2._name = input;
+						} }),
+					_react2.default.createElement(
+						'label',
+						{ htmlFor: 'italian' },
+						'Italian'
+					),
+					_react2.default.createElement('input', { type: 'checkbox', name: 'tags', id: 'italian', value: 'Italian', ref: function ref(tags) {
+							_this2._tags = {};_this2._tags["0"] = tags;
+						} }),
+					_react2.default.createElement(
+						'label',
+						{ htmlFor: 'american' },
+						'American'
+					),
+					_react2.default.createElement('input', { type: 'checkbox', name: 'tags', id: 'american', value: 'American', ref: function ref(tags) {
+							_this2._tags["1"] = tags;
+						} }),
+					_react2.default.createElement('input', { type: 'submit' })
 				),
 				_react2.default.createElement(
-					"a",
-					{ href: "#" },
-					"Add category"
+					'a',
+					{ href: '#' },
+					'Add category'
 				)
 			);
+		}
+	}, {
+		key: '_getRecipes',
+		value: function _getRecipes() {
+			var _this3 = this;
+
+			_jquery2.default.ajax({
+				method: 'GET',
+				url: 'https://meels-f1766.firebaseio.com/recipes.json',
+				success: function success(recipesObj) {
+
+					_this3.setState({
+						noOfRecipes: recipesObj.length
+					});
+				}
+			});
+		}
+	}, {
+		key: '_saveRecipe',
+		value: function _saveRecipe(event) {
+
+			event.preventDefault();
+
+			var tags = this._tags;
+			var recipeData = {
+				id: this.state.noOfRecipes,
+				name: "" + this._name.value,
+				tags: {}
+			};
+			var index = 0;
+
+			for (var tag in tags) {
+				if (tags[tag].checked) {
+					recipeData.tags[index++] = tags[tag].value;
+				}
+			}
+			console.log(recipeData);
+
+			/*jQuery.ajax({
+   	method: 'PUT',
+   	url: "https://meels-f1766.firebaseio.com/recipes/" + this.state.noOfRecipes + ".json",
+   	data: JSON.stringify(recipeData),
+   	success: (x) => {
+   		console.log('success', x);
+   	}
+   })*/
 		}
 	}]);
 
@@ -388,7 +472,7 @@ var AddPage = function (_React$Component) {
 
 exports.default = AddPage;
 
-},{"react":246}],6:[function(require,module,exports){
+},{"jquery":10,"react":246}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -654,8 +738,6 @@ var RecipePage = function (_React$Component) {
 					_this2.setState({
 						recipe: recipeObj
 					});
-
-					// return recipesList;
 				}
 			});
 		}
