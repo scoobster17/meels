@@ -1,7 +1,22 @@
+// sass utilities (includes charset)
 @import '../utilities/_utilities.scss';
 
+// reset
 @import '../../../../node_modules/reset-css/_reset';
+
+// assets
+@import '_fonts';
+@import '_icons';
+
+// common component styles
 @import '_common';
 @import '_header';
 @import '_nav';
 @import '_footer';
+@import '_forms';
+
+// component styles
+@import '../components/_spinner.scss';
+
+// pages styles
+// @import '_pageHere';

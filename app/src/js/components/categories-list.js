@@ -21,6 +21,7 @@ export default class CategoriesList extends React.Component {
 	render() {
 		return (
 			<fieldset>
+				<h2>Categories</h2>
 				{this.state.tags}
 			</fieldset>
 		)
@@ -31,7 +32,6 @@ export default class CategoriesList extends React.Component {
 			method: 'GET',
 			url: 'https://meels-f1766.firebaseio.com/categories.json',
 			success: (categories) => {
-				console.log(categories);
 				this.setState({
 					tags: categories.map((category, index) => {
 						return (

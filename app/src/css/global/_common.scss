@@ -5,18 +5,25 @@ main {
 	padding:20px;
 }
 h1 {
-	font-size: 4em;
+	@include font-size(4);
+	font-weight:bold;
+	margin:0 0 20px;
+}
+h2 {
+	@include font-size(2);
+	font-weight:bold;
+	margin:0 0 20px;
 }
 p {
-	font-size:1.6em;
+	@include font-size(1.6);
 	+ p {
 		margin:1em 0 0;
 	}
 }
 li {
-	font-size: 1.6em;
+	@include font-size(1.6);
 }
 // to be revised
 a {
-	font-size:1.6em;
+	@include font-size(1.6);
 }

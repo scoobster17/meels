@@ -1,6 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router';
-
 import jQuery from 'jquery';
 
 export default class RecipePage extends React.Component {
@@ -19,9 +18,6 @@ export default class RecipePage extends React.Component {
 	}
 
 	render() {
-
-
-
 		return (
 			<main>
 				<h1>
@@ -47,16 +43,13 @@ export default class RecipePage extends React.Component {
 	}
 
 	_getRecipeDetails(recipeToFindId) {
-
 		jQuery.ajax({
 			method: 'GET',
 			url: "https://meels-f1766.firebaseio.com/recipes/" + recipeToFindId + ".json",
 			success: (recipeObj) => {
-
 				this.setState({
 					recipe: recipeObj
 				});
-
 			}
 		});
 	}

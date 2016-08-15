@@ -1,0 +1,107 @@
+.spinner {
+  background:rgba(255,255,255,.8);
+  height:55%;
+  left:0;
+  padding:45% 0 0;
+  position:absolute;
+  text-align: center;
+  top:0;
+  width:100%;
+  i {
+    @include font-size(3.2);
+    margin: 0 0 10px;
+  }
+  p {
+    margin:0 0 0 20px;
+  }
+}
+
+/*******************************************************************************
+  Below is copied from Fontello Animation CSS
+ ******************************************************************************/
+
+/*
+   Animation example, for spinners
+*/
+.animate-spin {
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  -webkit-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+  display: inline-block;
+}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@-webkit-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@-o-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@-ms-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
