@@ -16,6 +16,7 @@ var gulp = require('gulp');
 
 // utilities
 var fs = require('fs');
+var request = require('request');
 
 // css
 var sass = require('gulp-sass');
@@ -39,9 +40,23 @@ var watch = require('gulp-watch');
 
 /* Variables */
 // var node;
-// var filePaths = {
-//	serverConfig: 'server/server.js'
-// }
+var filePaths = {
+//	serverConfig: 'server/server.js',
+    dbSeedFilePath: 'data/recipes-seed.json',
+    recipesDataUrl: 'https://meels-f1766.firebaseio.com/recipes.json'
+}
+
+/* ************************************************************************** */
+
+/* DATABASE */
+
+/**
+ * Task to backup the REST API data to a seed file
+ */
+gulp.task('backup-data', function() {
+    return request(filePaths.recipesDataUrl)
+        .pipe(fs.createWriteStream(filePaths.dbSeedFilePath));
+});
 
 /* ************************************************************************** */
 
