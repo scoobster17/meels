@@ -15,43 +15,31 @@ Notes
 
 Here are just some quick notes I have jotted down based on research from sainsburys.co.uk and food.com
 
-name
-description
-serves
-prep time
-cooking time
-total time
-ingredients
-	interchangable units?
-method / instructions / directions
-image(s)
-video
-nutrition info
-	calories
-	total fat
-	saturated fat
-	salt
-	sugar
-tags
-	vegetarian
-	gluten free
-	low fat
-	nut free
-	egg free
-	vegan
-	organic
-	low cholesterol
-	meat
-
-
-rating
-reviews
-write a review
-print button
-social links
-favourites / wishlist
-links to buy ingredients
-related recipes
-
-
-conversion calculator?
+Further features:
+- image(s)
+- video
+- nutrition info
+	- calories
+	- total fat
+	- saturated fat
+	- salt
+	- sugar
+- tags
+	- vegetarian
+	- gluten free
+	- low fat
+	- nut free
+	- egg free
+	- vegan
+	- organic
+	- low cholesterol
+	- meat
+- rating
+- reviews
+- write a review
+- print button
+- social links
+- favourites / wishlist
+- links to buy ingredients
+- related recipes
+- link to conversion calculator?

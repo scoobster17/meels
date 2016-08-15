@@ -22,6 +22,7 @@ export default class CategoriesList extends React.Component {
 		return (
 			<fieldset>
 				<h2>Categories</h2>
+				<p>Add some tags to your recipe to make it easier to find later. Make sure you only add the recipe to relevant categories!</p>
 				{this.state.tags}
 			</fieldset>
 		)

@@ -1,5 +1,5 @@
 // sass utilities (includes charset)
-@import '../utilities/_utilities.scss';
+@import '../utilities/_utilities';
 
 // reset
 @import '../../../../node_modules/reset-css/_reset';
@@ -16,7 +16,7 @@
 @import '_forms';
 
 // component styles
-@import '../components/_spinner.scss';
+@import '../components/_spinner';
 
 // pages styles
-// @import '_pageHere';
+@import '../pages/_addRecipe';
