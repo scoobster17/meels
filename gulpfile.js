@@ -34,14 +34,14 @@ var browserify = require('browserify');
 var watch = require('gulp-watch');
 
 // server
-// var spawn = require('child_process').spawn;
+var spawn = require('child_process').spawn;
 
 /* ************************************************************************** */
 
 /* Variables */
-// var node;
+var node;
 var filePaths = {
-//	serverConfig: 'server/server.js',
+	serverConfig: 'server/server.js',
     dbSeedFilePath: 'data/recipes-seed.json',
     recipesDataUrl: 'https://meels-f1766.firebaseio.com/recipes.json'
 }
@@ -56,6 +56,24 @@ var filePaths = {
 gulp.task('backup-data', function() {
     return request(filePaths.recipesDataUrl)
         .pipe(fs.createWriteStream(filePaths.dbSeedFilePath));
+});
+
+/* ************************************************************************** */
+
+/* SERVER */
+
+gulp.task('start-server', function() {
+    gulp.start('kill-server');
+    node = spawn('node', [filePaths.serverConfig], {stdio: 'inherit'});
+    node.on('close', function(code) {
+        if (code === 8) {
+            gulp.log('Error detected, waiting for changes...');
+        }
+    });
+});
+
+gulp.task('kill-server', function() {
+    if (node) node.kill();
 });
 
 /* ************************************************************************** */
@@ -79,23 +97,10 @@ gulp.task('sass', function() {
 
 // to add source maps
 
-/*gulp.task("js", ['eslint'], function () {
-  return gulp.src("app/js/** /*.babel.js")
-  	.pipe(sourcemaps.init())
-    .pipe(babel())
-    .pipe(concat("app.js"))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest("app/js"));
-});*/
-
 gulp.task("js", ['eslint'], function () {
   browserify("app/src/js/app.js")
-  	//.pipe(sourcemaps.init())
-    //.pipe(babel())
     .transform('babelify', {presets: ["es2015", "react"]})
     .bundle()
-    //.pipe(concat("app.js"))
-    //.pipe(sourcemaps.write())
     .pipe(fs.createWriteStream("app/dist/js/app.js"));
 });
 
@@ -125,11 +130,11 @@ gulp.task('watch', function() {
 		gulp.start('js');
 	});
 
-	// watch for server config changes
-	// watch(['server/server.js'], function() {
-	//	gulp.start('server');
-	// });
+    // watch for server config changes
+    watch([filePaths.serverConfig], function() {
+        gulp.start('start-server');
+    });
 
-	// start app server
-	// gulp.start('server');
+    // start app server
+	gulp.start('start-server');
 });
