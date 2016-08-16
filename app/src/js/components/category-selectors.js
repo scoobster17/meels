@@ -2,9 +2,9 @@ import React from 'react';
 
 import jQuery from 'jquery';
 
-import Category from './category';
+import CategoryOption from './category-option';
 
-export default class CategoriesList extends React.Component {
+export default class CategorySelectors extends React.Component {
 
 	constructor() {
 		super();
@@ -36,7 +36,7 @@ export default class CategoriesList extends React.Component {
 				this.setState({
 					tags: categories.map((category, index) => {
 						return (
-							<Category type="checkbox" value={category} id={category} label={category} key={index} setTags={this.props.setTags} />
+							<CategoryOption type="checkbox" value={category} id={category} label={category} key={index} setTags={this.props.setTags} />
 						)
 					})
 				})

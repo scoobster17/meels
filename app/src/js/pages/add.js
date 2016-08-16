@@ -3,7 +3,7 @@ import jQuery from 'jquery';
 
 import {Link} from 'react-router';
 
-import CategoriesList from '../components/categories-list';
+import CategorySelectors from '../components/category-selectors';
 import Option from '../components/option';
 import Spinner from '../components/spinner';
 
@@ -145,7 +145,7 @@ export default class AddPage extends React.Component {
                         </fieldset>
 
     					{ /* tags fieldset */ }
-    					<CategoriesList setTags={this._setTags} />
+    					<CategorySelectors selectable={true} setTags={this._setTags} />
 
     					<input type="submit" />
 

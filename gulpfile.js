@@ -105,6 +105,10 @@ gulp.task('kill-server', function() {
     if (node) node.kill();
 });
 
+gulp.task('kill-server-process', shell.task([
+    'killall node'
+]));
+
 /* ************************************************************************** */
 
 /* CSS */

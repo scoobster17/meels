@@ -66,6 +66,57 @@ var app = _react2.default.createElement(
 _reactDom2.default.render(app, document.getElementById('container'));
 
 },{"./layout/layout":8,"./pages/add":9,"./pages/home":10,"./pages/list":11,"./pages/recipe":12,"react":250,"react-dom":15,"react-router":45}],2:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CategoryOption = function (_React$Component) {
+	_inherits(CategoryOption, _React$Component);
+
+	function CategoryOption() {
+		_classCallCheck(this, CategoryOption);
+
+		return _possibleConstructorReturn(this, Object.getPrototypeOf(CategoryOption).apply(this, arguments));
+	}
+
+	_createClass(CategoryOption, [{
+		key: "render",
+		value: function render() {
+			return _react2.default.createElement(
+				"div",
+				{ className: "field" },
+				_react2.default.createElement(
+					"label",
+					{ htmlFor: this.props.id },
+					this.props.label
+				),
+				_react2.default.createElement("input", { type: this.props.type, name: "tags", id: this.props.id, value: this.props.value, onChange: this.props.setTags })
+			);
+		}
+	}]);
+
+	return CategoryOption;
+}(_react2.default.Component);
+
+exports.default = CategoryOption;
+
+},{"react":250}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -82,9 +133,9 @@ var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _category = require('./category');
+var _categoryOption = require('./category-option');
 
-var _category2 = _interopRequireDefault(_category);
+var _categoryOption2 = _interopRequireDefault(_categoryOption);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -94,13 +145,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var CategoriesList = function (_React$Component) {
-	_inherits(CategoriesList, _React$Component);
+var CategorySelectors = function (_React$Component) {
+	_inherits(CategorySelectors, _React$Component);
 
-	function CategoriesList() {
-		_classCallCheck(this, CategoriesList);
+	function CategorySelectors() {
+		_classCallCheck(this, CategorySelectors);
 
-		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CategoriesList).call(this));
+		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CategorySelectors).call(this));
 
 		_this.state = {
 			tags: []
@@ -108,7 +159,7 @@ var CategoriesList = function (_React$Component) {
 		return _this;
 	}
 
-	_createClass(CategoriesList, [{
+	_createClass(CategorySelectors, [{
 		key: 'componentWillMount',
 		value: function componentWillMount() {
 			this._getCategories();
@@ -143,7 +194,7 @@ var CategoriesList = function (_React$Component) {
 				success: function success(categories) {
 					_this2.setState({
 						tags: categories.map(function (category, index) {
-							return _react2.default.createElement(_category2.default, { type: 'checkbox', value: category, id: category, label: category, key: index, setTags: _this2.props.setTags });
+							return _react2.default.createElement(_categoryOption2.default, { type: 'checkbox', value: category, id: category, label: category, key: index, setTags: _this2.props.setTags });
 						})
 					});
 				}
@@ -151,63 +202,12 @@ var CategoriesList = function (_React$Component) {
 		}
 	}]);
 
-	return CategoriesList;
+	return CategorySelectors;
 }(_react2.default.Component);
 
-exports.default = CategoriesList;
+exports.default = CategorySelectors;
 
-},{"./category":3,"jquery":14,"react":250}],3:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require("react");
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Category = function (_React$Component) {
-	_inherits(Category, _React$Component);
-
-	function Category() {
-		_classCallCheck(this, Category);
-
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(Category).apply(this, arguments));
-	}
-
-	_createClass(Category, [{
-		key: "render",
-		value: function render() {
-			return _react2.default.createElement(
-				"div",
-				{ className: "field" },
-				_react2.default.createElement(
-					"label",
-					{ htmlFor: this.props.id },
-					this.props.label
-				),
-				_react2.default.createElement("input", { type: this.props.type, name: "tags", id: this.props.id, value: this.props.value, onChange: this.props.setTags })
-			);
-		}
-	}]);
-
-	return Category;
-}(_react2.default.Component);
-
-exports.default = Category;
-
-},{"react":250}],4:[function(require,module,exports){
+},{"./category-option":2,"jquery":14,"react":250}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -583,9 +583,9 @@ var _jquery2 = _interopRequireDefault(_jquery);
 
 var _reactRouter = require('react-router');
 
-var _categoriesList = require('../components/categories-list');
+var _categorySelectors = require('../components/category-selectors');
 
-var _categoriesList2 = _interopRequireDefault(_categoriesList);
+var _categorySelectors2 = _interopRequireDefault(_categorySelectors);
 
 var _option = require('../components/option');
 
@@ -871,7 +871,7 @@ var AddPage = function (_React$Component) {
                             _react2.default.createElement('textarea', { id: 'new-instruction', ref: 'new-instruction', placeholder: 'Pre-heat oven to 200° Celcius for a total of 20 minutes.' })
                         )
                     ),
-                    _react2.default.createElement(_categoriesList2.default, { setTags: this._setTags }),
+                    _react2.default.createElement(_categorySelectors2.default, { selectable: true, setTags: this._setTags }),
                     _react2.default.createElement('input', { type: 'submit' }),
 
                     // show the spinner only if the submission is awaiting a response
@@ -976,7 +976,7 @@ var AddPage = function (_React$Component) {
 
 exports.default = AddPage;
 
-},{"../components/categories-list":2,"../components/option":4,"../components/spinner":7,"jquery":14,"react":250,"react-router":45}],10:[function(require,module,exports){
+},{"../components/category-selectors":3,"../components/option":4,"../components/spinner":7,"jquery":14,"react":250,"react-router":45}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
