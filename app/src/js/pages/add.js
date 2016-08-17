@@ -6,6 +6,8 @@ import {Link} from 'react-router';
 import CategorySelectors from '../components/categories/category-selectors';
 import Option from '../components/global/option';
 import Spinner from '../components/global/spinner';
+import Ingredient from '../components/recipes/ingredient';
+import Instruction from '../components/recipes/instruction';
 
 export default class AddPage extends React.Component {
 
@@ -16,11 +18,18 @@ export default class AddPage extends React.Component {
 			noOfRecipes: 0,
 			waitingForAddRecipe: false,
             recipeAdded: false,
-			selectedTags: []
+			selectedTags: [],
+            ingredients: [
+                <Ingredient index="1" key="0" />
+            ],
+            instructions: [
+                <Instruction index="1" key="0" />
+            ]
 		}
 		this._saveRecipe = this._saveRecipe.bind(this);
 		this._setTags = this._setTags.bind(this);
-        this._updateUnitIndicator = this._updateUnitIndicator.bind(this);
+        this._addIngredient = this._addIngredient.bind(this);
+        this._addInstruction = this._addInstruction.bind(this);
 	}
 
 	componentWillMount() {
@@ -33,9 +42,6 @@ export default class AddPage extends React.Component {
         let days = [];
         let hours = [];
         let minutes = [];
-        const units = [' (none)', 'g (grams)', 'kg (kilograms)', 'tsp (teaspoons)', 'tbsp (tablespoons)', 'ml (millilitres)', 'l (litres)', 'lb (pounds)'];
-        const noOfUnits = units.length;
-        let unitOptions = [];
 
         // days
         for (let i=0; i<8; i++) {
@@ -50,14 +56,6 @@ export default class AddPage extends React.Component {
         // minutes
         for (let k=0; k<60; k++) {
             minutes.push(<Option text={k} value={k} key={k-1} />);
-        }
-
-        // units
-        for (let l=0; l<noOfUnits; l++) {
-            let split = units[l].split(' (');
-            let text = split[1] ? split[1].substring(0, split[1].length-1) : '';
-            let value = split[0];
-            unitOptions.push(<Option text={text} value={value} key={l} />);
         }
 
 		return (
@@ -86,62 +84,58 @@ export default class AddPage extends React.Component {
                             <div className="field">
                                 <h3 className="label">Preperation time</h3>
                                 <label htmlFor="prep-days">Days</label>
-                                <select id="prep-days" name="prep-days">
+                                <select id="prep-days" name="prep-days" ref="prep-days">
                                     {days}
                                 </select>
                                 <label htmlFor="prep-hours">Hours</label>
-                                <select id="prep-hours" name="prep-hours">
+                                <select id="prep-hours" name="prep-hours" ref="prep-hours">
                                     {hours}
                                 </select>
                                 <label htmlFor="prep-minutes">Minutes</label>
-                                <select id="prep-minutes" name="prep-minutes">
+                                <select id="prep-minutes" name="prep-minutes" ref="prep-minutes">
                                     {minutes}
                                 </select>
                             </div>
                             <div className="field">
                                 <h3 className="label">Cooking time</h3>
                                 <label htmlFor="cooking-days">Days</label>
-                                <select id="cooking-days" name="cooking-days">
+                                <select id="cooking-days" name="cooking-days" ref="cooking-days">
                                     {days}
                                 </select>
                                 <label htmlFor="cooking-hours">Hours</label>
-                                <select id="cooking-hours" name="cooking-hours">
+                                <select id="cooking-hours" name="cooking-hours" ref="cooking-hours">
                                     {hours}
                                 </select>
 		    					<label htmlFor="cooking-minutes">Minutes</label>
-                                <select id="cooking-minutes" name="cooking-minutes">
+                                <select id="cooking-minutes" name="cooking-minutes" ref="cooking-minutes">
                                     {minutes}
                                 </select>
                             </div>
                             <div className="field">
-                                <label htmlFor="total-time">Total time</label>
-                                <input type="text" disabled="disabled" id="total-time" ref="total-time" value="0 minutes" />
+                                <h3 className="label">Total time</h3>
+                                <div className="field">
+                                    <label htmlFor="total-days">Days</label>
+                                    <input type="text" disabled="disabled" id="total-days" ref="total-days" value="0" />
+                                </div>
+                                <div className="field">
+                                    <label htmlFor="total-hours">Hours</label>
+                                    <input type="text" disabled="disabled" id="total-hours" ref="total-hours" value="0" />
+                                </div>
+                                <div className="field">
+                                    <label htmlFor="total-minutes">Minutes</label>
+                                    <input type="text" disabled="disabled" id="total-minutes" ref="total-minutes" value="0" />
+                                </div>
                             </div>
 	    				</fieldset>
-                        <fieldset>
+                        <fieldset id="ingredients">
                             <h2>Ingredients</h2>
-                            <div className="field">
-                                <label htmlFor="ingredient-name">Ingredient Name</label>
-                                <input type="text" id="ingredient-name" name="ingredient-name" placeholder="Salt" />
-                            </div>
-                            <div className="field">
-                                <label htmlFor="ingredient-unit">Unit</label>
-                                <select id="ingredient-unit" name="ingredient-unit" onChange={this._updateUnitIndicator}>
-                                    {unitOptions}
-                                </select>
-                            </div>
-                            <div className="field">
-                                <label htmlFor="ingredient-measure">Measure</label>
-                                <input type="text" id="ingredient-measure" name="ingredient-measure" placeholder="A pinch / 3 / 100" />
-                                <p id="unitIndicator" className="unitIndicator" aria-hidden="true"></p>
-                            </div>
+                            {this.state.ingredients}
+                            <button id="addIngredient" onClick={this._addIngredient}>Add ingredient to recipe</button>
                         </fieldset>
-                        <fieldset>
+                        <fieldset id="instructions">
                             <h2>Instructions</h2>
-                            <div className="field">
-                                <label htmlFor="new-instruction">Description</label>
-                                <textarea id="new-instruction" ref="new-instruction" placeholder="Pre-heat oven to 200&deg; Celcius for a total of 20 minutes."></textarea>
-                            </div>
+                            {this.state.instructions}
+                            <button id="addInstruction" onClick={this._addInstruction}>Add instruction to recipe</button>
                         </fieldset>
 
     					{ /* tags fieldset */ }
@@ -161,7 +155,7 @@ export default class AddPage extends React.Component {
                     <p>Your recipe has been added.</p>
 
                 }
-                <Link to={'/list'}>
+                <Link to={'/recipes'}>
                     Go to recipes
                 </Link>
 			</main>
@@ -181,13 +175,6 @@ export default class AddPage extends React.Component {
 			}
 		});
 	}
-
-    _updateUnitIndicator(event) {
-        const unit = event.target.value;
-        const unitIndicator = document.querySelector('#unitIndicator');
-
-        unitIndicator.innerHTML = unit;
-    }
 
 	_setTags(event) {
 
@@ -210,20 +197,77 @@ export default class AddPage extends React.Component {
 
 	}
 
+    _addIngredient(event) {
+        event.preventDefault();
+        let newIngredients = this.state.ingredients;
+        const noOfIngredients = newIngredients.length;
+        newIngredients[noOfIngredients] = <Ingredient index={noOfIngredients + 1} key={noOfIngredients} />
+
+        this.setState({
+            ingredients: newIngredients
+        })
+    }
+
+    _addInstruction(event) {
+        event.preventDefault();
+        let newInstructions = this.state.instructions;
+        const noOfInstructions = newInstructions.length;
+        newInstructions[noOfInstructions] = <Instruction index={noOfInstructions + 1} key={noOfInstructions} />
+
+        this.setState({
+            instructions: newInstructions
+        })
+    }
+
 	_saveRecipe(event) {
 
 		event.preventDefault();
 
         let form = document.querySelector('#addRecipeForm');
-		let tags = this._tags;
-		let recipeData = {
-			id: this.state.noOfRecipes,
-			name: "" + this.refs.recipeName.value,
-			description: "" + this.refs.description.value,
-			tags: this.state.selectedTags
-		};
+        let recipeData = {
+            id: this.state.noOfRecipes,
+            name: this.refs.recipeName.value,
+            description: this.refs.description.value,
+            serves: this.refs.serves.value,
+            "prep-time": {
+                days: this.refs['prep-days'].value,
+                hours: this.refs['prep-hours'].value,
+                minutes: this.refs['prep-minutes'].value
+            },
+            "cooking-time": {
+                days: this.refs['cooking-days'].value,
+                hours: this.refs['cooking-hours'].value,
+                minutes: this.refs['cooking-minutes'].value
+            },
+            'total-time': {
+                days: this.refs['total-days'].value,
+                hours: this.refs['total-hours'].value,
+                minutes: this.refs['total-minutes'].value
+            },
+            ingredients: [],
+            instructions: [],
+            tags: this.state.selectedTags
+        };
 
-		this.setState({waitingForAddRecipe: true});
+        const ingredientNames = document.querySelectorAll('#addRecipeForm [name^=ingredient-name]');
+        const ingredientUnits = document.querySelectorAll('#addRecipeForm [name^=ingredient-unit]');
+        const ingredientMeasures = document.querySelectorAll('#addRecipeForm [name^=ingredient-measure]');
+        const noOfIngredients = ingredientNames.length;
+        const instructions = document.querySelectorAll('#addRecipeForm [name^=instruction]');
+
+        for (let i=0; i<noOfIngredients; i++) {
+            recipeData.ingredients.push({
+                name: ingredientNames[i].value,
+                unit: ingredientUnits[i].value,
+                measure: ingredientMeasures[i].value
+            });
+        };
+
+        instructions.forEach((instruction) => {
+            recipeData.instructions.push(instruction.value)
+        });
+
+        this.setState({waitingForAddRecipe: true});
 
 		jQuery.ajax({
 			method: 'PUT',
@@ -235,9 +279,14 @@ export default class AddPage extends React.Component {
                 	waitingForAddRecipe: false
                 });
                 form.reset();
-			}
+			},
+            error: () => {
+                // to add feedback message to user
+                this.setState({
+                    waitingForAddRecipe: false
+                });
+            }
 		});
 
-		// check for and add new category
 	}
 }
