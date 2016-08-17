@@ -1731,43 +1731,155 @@ var RecipePage = function (_React$Component) {
 				'main',
 				null,
 				_react2.default.createElement(
-					'h1',
-					null,
-					this.state.recipe.name
-				),
-				_react2.default.createElement(
-					'p',
-					null,
-					'Short description.'
-				),
-				_react2.default.createElement(
-					'h2',
-					null,
-					'Method / Instructions'
-				),
-				_react2.default.createElement(
-					'ol',
+					'dl',
 					null,
 					_react2.default.createElement(
-						'li',
+						'dt',
 						null,
-						'Get your ingredients'
+						'Recipe Name'
 					),
 					_react2.default.createElement(
-						'li',
+						'dd',
 						null,
-						'Mix the ingredients'
+						_react2.default.createElement(
+							'h1',
+							null,
+							this.state.recipe.name
+						)
+					),
+					_react2.default.createElement(
+						'dt',
+						null,
+						'Description'
+					),
+					_react2.default.createElement(
+						'dd',
+						null,
+						_react2.default.createElement(
+							'p',
+							null,
+							this.state.recipe.description
+						)
+					),
+					_react2.default.createElement(
+						'dt',
+						null,
+						'Serves'
+					),
+					_react2.default.createElement(
+						'dd',
+						null,
+						this.state.recipe.serves === 1 ? this.state.recipe.serves + " person" : this.state.recipe.serves > 1 ? this.state.recipe.serves + " people" : ""
+					),
+					_react2.default.createElement(
+						'dt',
+						null,
+						'Preparation time'
+					),
+					_react2.default.createElement(
+						'dd',
+						null,
+						this.state.recipe['prep-time'] && this.state.recipe['prep-time'].days !== "0" ? this.state.recipe['prep-time'].days + " days " : "",
+						this.state.recipe['prep-time'] && this.state.recipe['prep-time'].hours !== "0" ? this.state.recipe['prep-time'].hours + " hours " : "",
+						this.state.recipe['prep-time'] && this.state.recipe['prep-time'].minutes !== "0" ? this.state.recipe['prep-time'].minutes + " minutes" : ""
+					),
+					_react2.default.createElement(
+						'dt',
+						null,
+						'Cooking time'
+					),
+					_react2.default.createElement(
+						'dd',
+						null,
+						this.state.recipe['cooking-time'] && this.state.recipe['cooking-time'].days !== "0" ? this.state.recipe['cooking-time'].days + " days " : "",
+						this.state.recipe['cooking-time'] && this.state.recipe['cooking-time'].hours !== "0" ? this.state.recipe['cooking-time'].hours + " hours " : "",
+						this.state.recipe['cooking-time'] && this.state.recipe['cooking-time'].minutes !== "0" ? this.state.recipe['cooking-time'].minutes + " minutes" : ""
+					),
+					_react2.default.createElement(
+						'dt',
+						null,
+						'Total time'
+					),
+					_react2.default.createElement(
+						'dd',
+						null,
+						this.state.recipe['total-time'] && this.state.recipe['total-time'].days !== "0" ? this.state.recipe['total-time'].days + " days " : "",
+						this.state.recipe['total-time'] && this.state.recipe['total-time'].hours !== "0" ? this.state.recipe['total-time'].hours + " hours " : "",
+						this.state.recipe['total-time'] && this.state.recipe['total-time'].minutes !== "0" ? this.state.recipe['total-time'].minutes + " minutes" : ""
+					),
+					_react2.default.createElement(
+						'dt',
+						null,
+						_react2.default.createElement(
+							'h2',
+							null,
+							'Ingredients'
+						)
+					),
+					_react2.default.createElement(
+						'dd',
+						null,
+						_react2.default.createElement(
+							'ul',
+							null,
+							this.state.recipe.ingredients && this.state.recipe.ingredients.map(function (ingredient, index) {
+								return _react2.default.createElement(
+									'li',
+									{ key: index },
+									ingredient.measure + ingredient.unit + " of " + ingredient.name
+								);
+							})
+						)
+					),
+					_react2.default.createElement(
+						'dt',
+						null,
+						_react2.default.createElement(
+							'h2',
+							null,
+							'Method / Instructions'
+						)
+					),
+					_react2.default.createElement(
+						'dd',
+						null,
+						_react2.default.createElement(
+							'ol',
+							null,
+							this.state.recipe.instructions && this.state.recipe.instructions.map(function (instruction, index) {
+								return _react2.default.createElement(
+									'li',
+									{ key: index },
+									instruction
+								);
+							})
+						)
+					),
+					_react2.default.createElement(
+						'dt',
+						null,
+						'Tags'
+					),
+					_react2.default.createElement(
+						'dd',
+						null,
+						_react2.default.createElement(
+							'ul',
+							null,
+							this.state.recipe.tags && this.state.recipe.tags.map(function (tag, index) {
+								return _react2.default.createElement(
+									'li',
+									{ key: index },
+									tag
+								);
+							})
+						)
 					)
 				),
 				_react2.default.createElement(
-					'a',
-					{ href: '#' },
-					'Add recipe'
-				),
-				_react2.default.createElement(
-					'a',
-					{ href: '#' },
-					'Add category'
+					_reactRouter.Link,
+					{ to: '/newRecipe' },
+					'Add a new recipe'
 				),
 				_react2.default.createElement(
 					_reactRouter.Link,
