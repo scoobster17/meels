@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import CategoriesList from '../components/categories-list';
+import CategoriesList from '../components/categories/categories-list';
 
 export default class CategoriesPage extends React.Component {
     render() {

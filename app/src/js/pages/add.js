@@ -3,9 +3,9 @@ import jQuery from 'jquery';
 
 import {Link} from 'react-router';
 
-import CategorySelectors from '../components/category-selectors';
-import Option from '../components/option';
-import Spinner from '../components/spinner';
+import CategorySelectors from '../components/categories/category-selectors';
+import Option from '../components/global/option';
+import Spinner from '../components/global/spinner';
 
 export default class AddPage extends React.Component {
 

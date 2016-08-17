@@ -189,3 +189,10 @@ gulp.task('watch', function() {
     // start app server
 	gulp.start('start-server');
 });
+
+/*
+    Task to force kill all node processes and start the watch
+ */
+gulp.task('force-watch', ['kill-server-process'], function() {
+    gulp.start('watch');
+});

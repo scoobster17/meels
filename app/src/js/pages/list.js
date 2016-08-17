@@ -1,5 +1,5 @@
 import React from 'react';
-import RecipeList from '../components/recipe-list';
+import RecipeList from '../components/recipes/recipe-list';
 
 export default class ListPage extends React.Component {
 
