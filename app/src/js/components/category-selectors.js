@@ -36,7 +36,7 @@ export default class CategorySelectors extends React.Component {
 				this.setState({
 					tags: categories.map((category, index) => {
 						return (
-							<CategoryOption type="checkbox" value={category} id={category} label={category} key={index} setTags={this.props.setTags} />
+							<CategoryOption type="checkbox" value={category.name} id={category.id} label={category.name} key={index} setTags={this.props.setTags} />
 						)
 					})
 				})

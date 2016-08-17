@@ -145,7 +145,7 @@ export default class AddPage extends React.Component {
                         </fieldset>
 
     					{ /* tags fieldset */ }
-    					<CategorySelectors selectable={true} setTags={this._setTags} />
+    					<CategorySelectors setTags={this._setTags} />
 
     					<input type="submit" />
 

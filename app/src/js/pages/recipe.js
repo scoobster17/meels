@@ -35,7 +35,7 @@ export default class RecipePage extends React.Component {
 				</ol>
 				<a href="#">Add recipe</a>
 				<a href="#">Add category</a>
-				<Link to="/list">
+				<Link to="/recipes">
 					Back to recipes
 				</Link>
 			</main>

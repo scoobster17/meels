@@ -2,3 +2,7 @@
 	font-size: #{$size * 10}px;
 	font-size: #{$size}em;
 }
+@mixin font-reset() {
+    font-size: inherit;
+    font-size: 1em;
+}

@@ -46,9 +46,11 @@ var spawn = require('child_process').spawn;
 var node;
 var filePaths = {
 	serverConfig: 'server/server.js',
-    dataSeed: 'data/recipes-seed.json',
+    recipesDataSeed: 'data/recipes-seed.json',
+    categoriesDataSeed: 'data/categories-seed.json',
     restApiDataUrl: 'https://console.firebase.google.com/project/meels-f1766/database/data',
-    recipesDataUrl: 'https://meels-f1766.firebaseio.com/recipes.json'
+    recipesDataUrl: 'https://meels-f1766.firebaseio.com/recipes.json',
+    categoriesDataUrl: 'https://meels-f1766.firebaseio.com/categories.json'
 }
 
 /* ************************************************************************** */
@@ -60,22 +62,38 @@ var filePaths = {
  */
 gulp.task('backup-data', function() {
     return request(filePaths.recipesDataUrl)
-        .pipe(fs.createWriteStream(filePaths.dataSeed));
+        .pipe(fs.createWriteStream(filePaths.recipesDataSeed));
 });
 
 /**
- * Task to import data to the REST API should anything be lost
+ * Task to import recipes data to the REST API should anything be lost
  */
-gulp.task('import-data', function() {
-    var data = fs.readFileSync(filePaths.dataSeed, "utf-8");
-    return gulp.src(filePaths.dataSeed, {read: false})
-        .pipe(expect(filePaths.dataSeed))
+gulp.task('import-recipes-data', function() {
+    var data = fs.readFileSync(filePaths.recipesDataSeed, "utf-8");
+    return gulp.src(filePaths.recipesDataSeed, {read: false})
+        .pipe(expect(filePaths.recipesDataSeed))
         .pipe(confirm({
             question: 'Are you sure you want to import this data? All existing data will be lost! (y/n)',
             input: '_key:y'
         }))
         .pipe(shell([
             "curl -X PUT -d '" + data + "' " + filePaths.recipesDataUrl
+        ]));
+});
+
+/**
+ * Task to import categories data to the REST API should anything be lost
+ */
+gulp.task('import-categories-data', function() {
+    var data = fs.readFileSync(filePaths.categoriesDataSeed, "utf-8");
+    return gulp.src(filePaths.categoriesDataSeed, {read: false})
+        .pipe(expect(filePaths.categoriesDataSeed))
+        .pipe(confirm({
+            question: 'Are you sure you want to import this data? All existing data will be lost! (y/n)',
+            input: '_key:y'
+        }))
+        .pipe(shell([
+            "curl -X PUT -d '" + data + "' " + filePaths.categoriesDataUrl
         ]));
 });
 

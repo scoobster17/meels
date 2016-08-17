@@ -12,6 +12,7 @@ import Layout from './layout/layout';
 
 // Pages
 import HomePage from './pages/home';
+import CategoriesPage from './pages/categories';
 import ListPage from './pages/list';
 import RecipePage from './pages/recipe';
 import AddPage from './pages/add';
@@ -25,8 +26,9 @@ const app = (
 		<Redirect from="/" to="/home" />
 		<Route path="/" component={Layout}>
 			<Route path="home" component={HomePage} />
-			<Route path="list" component={ListPage} />
-			<Route path="recipe/:recipeId" component={RecipePage} />
+			<Route path="categories" component={CategoriesPage} />
+			<Route path="recipes" component={ListPage} />
+			<Route path="recipes/:recipeId" component={RecipePage} />
 			<Route path="newRecipe" component={AddPage} />
 		</Route>
 	</Router>

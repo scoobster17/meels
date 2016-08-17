@@ -28,8 +28,13 @@ export default class Layout extends React.Component {
 								</Link>
 							</li>
 							<li>
-								<Link to="/list">
+								<Link to="/recipes">
 									Recipes
+								</Link>
+							</li>
+							<li>
+								<Link to="/categories">
+									Categories
 								</Link>
 							</li>
 							<li>
