@@ -1135,7 +1135,7 @@ var AddPage = function (_React$Component) {
                             ),
                             _react2.default.createElement(
                                 'select',
-                                { id: 'prep-days', name: 'prep-days', ref: 'prep-days' },
+                                { id: 'prep-days', name: 'prep-days', ref: 'prep-days', onChange: this._updateTotalTime.bind(this, 'days') },
                                 days
                             ),
                             _react2.default.createElement(
@@ -1145,7 +1145,7 @@ var AddPage = function (_React$Component) {
                             ),
                             _react2.default.createElement(
                                 'select',
-                                { id: 'prep-hours', name: 'prep-hours', ref: 'prep-hours' },
+                                { id: 'prep-hours', name: 'prep-hours', ref: 'prep-hours', onChange: this._updateTotalTime.bind(this, 'hours') },
                                 hours
                             ),
                             _react2.default.createElement(
@@ -1155,7 +1155,7 @@ var AddPage = function (_React$Component) {
                             ),
                             _react2.default.createElement(
                                 'select',
-                                { id: 'prep-minutes', name: 'prep-minutes', ref: 'prep-minutes' },
+                                { id: 'prep-minutes', name: 'prep-minutes', ref: 'prep-minutes', onChange: this._updateTotalTime.bind(this, 'minutes') },
                                 minutes
                             )
                         ),
@@ -1174,7 +1174,7 @@ var AddPage = function (_React$Component) {
                             ),
                             _react2.default.createElement(
                                 'select',
-                                { id: 'cooking-days', name: 'cooking-days', ref: 'cooking-days' },
+                                { id: 'cooking-days', name: 'cooking-days', ref: 'cooking-days', onChange: this._updateTotalTime.bind(this, 'days') },
                                 days
                             ),
                             _react2.default.createElement(
@@ -1184,7 +1184,7 @@ var AddPage = function (_React$Component) {
                             ),
                             _react2.default.createElement(
                                 'select',
-                                { id: 'cooking-hours', name: 'cooking-hours', ref: 'cooking-hours' },
+                                { id: 'cooking-hours', name: 'cooking-hours', ref: 'cooking-hours', onChange: this._updateTotalTime.bind(this, 'hours') },
                                 hours
                             ),
                             _react2.default.createElement(
@@ -1194,7 +1194,7 @@ var AddPage = function (_React$Component) {
                             ),
                             _react2.default.createElement(
                                 'select',
-                                { id: 'cooking-minutes', name: 'cooking-minutes', ref: 'cooking-minutes' },
+                                { id: 'cooking-minutes', name: 'cooking-minutes', ref: 'cooking-minutes', onChange: this._updateTotalTime.bind(this, 'minutes') },
                                 minutes
                             )
                         ),
@@ -1324,6 +1324,15 @@ var AddPage = function (_React$Component) {
             this.setState({
                 selectedTags: newTags
             });
+        }
+    }, {
+        key: '_updateTotalTime',
+        value: function _updateTotalTime(unit) {
+            event.preventDefault();
+            var elemToUpdate = document.getElementById('total-' + unit);
+            var relevantPrepTimeElem = document.getElementById('prep-' + unit);
+            var relevantCookingTimeElem = document.getElementById('cooking-' + unit);
+            elemToUpdate.value = parseInt(relevantPrepTimeElem.value) + parseInt(relevantCookingTimeElem.value);
         }
     }, {
         key: '_addIngredient',

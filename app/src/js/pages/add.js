@@ -27,7 +27,7 @@ export default class AddPage extends React.Component {
             ]
 		}
 		this._saveRecipe = this._saveRecipe.bind(this);
-		this._setTags = this._setTags.bind(this);
+        this._setTags = this._setTags.bind(this);
         this._addIngredient = this._addIngredient.bind(this);
         this._addInstruction = this._addInstruction.bind(this);
 	}
@@ -84,30 +84,30 @@ export default class AddPage extends React.Component {
                             <div className="field">
                                 <h3 className="label">Preperation time</h3>
                                 <label htmlFor="prep-days">Days</label>
-                                <select id="prep-days" name="prep-days" ref="prep-days">
+                                <select id="prep-days" name="prep-days" ref="prep-days" onChange={this._updateTotalTime.bind(this, 'days')}>
                                     {days}
                                 </select>
                                 <label htmlFor="prep-hours">Hours</label>
-                                <select id="prep-hours" name="prep-hours" ref="prep-hours">
+                                <select id="prep-hours" name="prep-hours" ref="prep-hours" onChange={this._updateTotalTime.bind(this, 'hours')}>
                                     {hours}
                                 </select>
                                 <label htmlFor="prep-minutes">Minutes</label>
-                                <select id="prep-minutes" name="prep-minutes" ref="prep-minutes">
+                                <select id="prep-minutes" name="prep-minutes" ref="prep-minutes" onChange={this._updateTotalTime.bind(this, 'minutes')}>
                                     {minutes}
                                 </select>
                             </div>
                             <div className="field">
                                 <h3 className="label">Cooking time</h3>
                                 <label htmlFor="cooking-days">Days</label>
-                                <select id="cooking-days" name="cooking-days" ref="cooking-days">
+                                <select id="cooking-days" name="cooking-days" ref="cooking-days" onChange={this._updateTotalTime.bind(this, 'days')}>
                                     {days}
                                 </select>
                                 <label htmlFor="cooking-hours">Hours</label>
-                                <select id="cooking-hours" name="cooking-hours" ref="cooking-hours">
+                                <select id="cooking-hours" name="cooking-hours" ref="cooking-hours" onChange={this._updateTotalTime.bind(this, 'hours')}>
                                     {hours}
                                 </select>
 		    					<label htmlFor="cooking-minutes">Minutes</label>
-                                <select id="cooking-minutes" name="cooking-minutes" ref="cooking-minutes">
+                                <select id="cooking-minutes" name="cooking-minutes" ref="cooking-minutes" onChange={this._updateTotalTime.bind(this, 'minutes')}>
                                     {minutes}
                                 </select>
                             </div>
@@ -196,6 +196,14 @@ export default class AddPage extends React.Component {
 		});
 
 	}
+
+    _updateTotalTime(unit) {
+        event.preventDefault();
+        let elemToUpdate = document.getElementById('total-' + unit);
+        let relevantPrepTimeElem = document.getElementById('prep-' + unit);
+        let relevantCookingTimeElem = document.getElementById('cooking-' + unit);
+        elemToUpdate.value = parseInt(relevantPrepTimeElem.value) + parseInt(relevantCookingTimeElem.value);
+    }
 
     _addIngredient(event) {
         event.preventDefault();

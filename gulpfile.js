@@ -60,7 +60,7 @@ var filePaths = {
 /**
  * Task to backup the REST API data to a seed file
  */
-gulp.task('backup-data', function() {
+gulp.task('backup-recipe-data', function() {
     return request(filePaths.recipesDataUrl)
         .pipe(fs.createWriteStream(filePaths.recipesDataSeed));
 });
