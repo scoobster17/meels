@@ -131,56 +131,49 @@ var CategoriesList = function (_React$Component) {
             var _this2 = this;
 
             // perform request for recipes data
-            (0, _dataHandling.handleData)(
+            (0, _dataHandling.handleData)({
+                method: 'GET',
+                url: _constants.Urls.data.recipes,
+                success: function success(recipes) {
 
-            // method
-            'GET',
+                    var noOfRecipes = recipes.length;
+                    var categoriesFound = [];
 
-            // url
-            _constants.Urls.data.recipes,
+                    // loop through each recipe object to make a list of categories
+                    for (var i = 0; i < noOfRecipes; i++) {
 
-            // success callback
-            function (recipes) {
+                        var currentRecipe = recipes[i];
+                        var noOfTags = currentRecipe.tags.length;
 
-                var noOfRecipes = recipes.length;
-                var categoriesFound = [];
+                        // check if each tag is yet accounted for
+                        for (var j = 0; j < noOfTags; j++) {
 
-                // loop through each recipe object to make a list of categories
-                for (var i = 0; i < noOfRecipes; i++) {
-
-                    var currentRecipe = recipes[i];
-                    var noOfTags = currentRecipe.tags.length;
-
-                    // check if each tag is yet accounted for
-                    for (var j = 0; j < noOfTags; j++) {
-
-                        // add to array if not there already
-                        if (categoriesFound.indexOf(currentRecipe.tags[j]) == -1) {
-                            categoriesFound.push(currentRecipe.tags[j]);
+                            // add to array if not there already
+                            if (categoriesFound.indexOf(currentRecipe.tags[j]) == -1) {
+                                categoriesFound.push(currentRecipe.tags[j]);
+                            }
                         }
                     }
+
+                    // render list based on tags used
+                    _this2.setState({
+                        tags: categoriesFound.sort().map(function (category, index) {
+                            return _react2.default.createElement(
+                                'li',
+                                { key: index },
+                                _react2.default.createElement(
+                                    _reactRouter.Link,
+                                    { to: '/recipes?category=' + category.toLowerCase() },
+                                    category
+                                )
+                            );
+                        })
+                    });
+                },
+                error: function error() {
+                    // user friendly error to be implemented
+                    console.log('Error getting data');
                 }
-
-                // render list based on tags used
-                _this2.setState({
-                    tags: categoriesFound.sort().map(function (category, index) {
-                        return _react2.default.createElement(
-                            'li',
-                            { key: index },
-                            _react2.default.createElement(
-                                _reactRouter.Link,
-                                { to: '/recipes?category=' + category.toLowerCase() },
-                                category
-                            )
-                        );
-                    })
-                });
-            },
-
-            // error callback
-            function () {
-                // user friendly error to be implemented
-                console.log('Error getting data');
             });
         }
     }]);
@@ -254,9 +247,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _jquery = require('jquery');
+var _constants = require('../../config/constants');
 
-var _jquery2 = _interopRequireDefault(_jquery);
+var _dataHandling = require('../../data/data-handling');
 
 var _categoryOption = require('./category-option');
 
@@ -313,15 +306,19 @@ var CategorySelectors = function (_React$Component) {
 		value: function _getCategories() {
 			var _this2 = this;
 
-			_jquery2.default.ajax({
+			(0, _dataHandling.handleData)({
 				method: 'GET',
-				url: 'https://meels-f1766.firebaseio.com/categories.json',
+				url: _constants.Urls.data.categories,
 				success: function success(categories) {
 					_this2.setState({
 						tags: categories.map(function (category, index) {
 							return _react2.default.createElement(_categoryOption2.default, { type: 'checkbox', value: category.name, id: category.id, label: category.name, key: index, setTags: _this2.props.setTags });
 						})
 					});
+				},
+				error: function error() {
+					// TODO user feedback
+					console.log('Error with data');
 				}
 			});
 		}
@@ -332,7 +329,7 @@ var CategorySelectors = function (_React$Component) {
 
 exports.default = CategorySelectors;
 
-},{"./category-option":3,"jquery":22,"react":258}],5:[function(require,module,exports){
+},{"../../config/constants":13,"../../data/data-handling":14,"./category-option":3,"react":258}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -750,13 +747,13 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _constants = require('../../config/constants');
+
+var _dataHandling = require('../../data/data-handling');
+
 var _recipePreview = require('./recipe-preview');
 
 var _recipePreview2 = _interopRequireDefault(_recipePreview);
-
-var _jquery = require('jquery');
-
-var _jquery2 = _interopRequireDefault(_jquery);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -791,9 +788,9 @@ var RecipeList = function (_React$Component) {
         value: function _getRecipes() {
             var _this2 = this;
 
-            _jquery2.default.ajax({
+            (0, _dataHandling.handleData)({
                 method: 'GET',
-                url: 'https://meels-f1766.firebaseio.com/recipes.json',
+                url: _constants.Urls.data.recipes,
                 success: function success(recipes) {
 
                     var noOfRecipes = recipes.length;
@@ -828,6 +825,10 @@ var RecipeList = function (_React$Component) {
                         }),
                         noOfRecipes: noOfRecipes
                     });
+                },
+                error: function error() {
+                    // TODO user feedback
+                    console.log('Error with data');
                 }
             });
         }
@@ -848,7 +849,7 @@ var RecipeList = function (_React$Component) {
 
 exports.default = RecipeList;
 
-},{"./recipe-preview":12,"jquery":22,"react":258}],12:[function(require,module,exports){
+},{"../../config/constants":13,"../../data/data-handling":14,"./recipe-preview":12,"react":258}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -914,7 +915,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 var Urls = exports.Urls = {
     data: {
-        recipes: 'https://meels-f1766.firebaseio.com/recipes.json'
+        base: 'https://meels-f1766.firebaseio.com',
+        recipes: 'https://meels-f1766.firebaseio.com/recipes.json',
+        categories: 'https://meels-f1766.firebaseio.com/categories.json'
     }
 };
 
@@ -932,16 +935,8 @@ var _jquery2 = _interopRequireDefault(_jquery);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var handleData = exports.handleData = function handleData(method, url) {
-    var successCallback = arguments.length <= 2 || arguments[2] === undefined ? function () {} : arguments[2];
-    var errorCallback = arguments.length <= 3 || arguments[3] === undefined ? function () {} : arguments[3];
-
-    _jquery2.default.ajax({
-        method: method,
-        url: url,
-        success: successCallback,
-        error: errorCallback
-    });
+var handleData = exports.handleData = function handleData(options) {
+    _jquery2.default.ajax(options);
 };
 
 },{"jquery":22}],15:[function(require,module,exports){
@@ -1028,11 +1023,11 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _jquery = require('jquery');
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
 var _reactRouter = require('react-router');
+
+var _constants = require('../config/constants');
+
+var _dataHandling = require('../data/data-handling');
 
 var _categorySelectors = require('../components/categories/category-selectors');
 
@@ -1343,11 +1338,11 @@ var AddPage = function (_React$Component) {
         value: function _getRecipes() {
             var _this2 = this;
 
-            _jquery2.default.ajax({
+            // perform request for recipes data
+            (0, _dataHandling.handleData)({
                 method: 'GET',
-                url: 'https://meels-f1766.firebaseio.com/recipes.json',
+                url: _constants.Urls.data.recipes,
                 success: function success(recipesObj) {
-
                     _this2.setState({
                         noOfRecipes: recipesObj.length
                     });
@@ -1461,9 +1456,10 @@ var AddPage = function (_React$Component) {
 
             this.setState({ waitingForAddRecipe: true });
 
-            _jquery2.default.ajax({
+            // perform request for recipes data
+            (0, _dataHandling.handleData)({
                 method: 'PUT',
-                url: "https://meels-f1766.firebaseio.com/recipes/" + this.state.noOfRecipes + ".json",
+                url: _constants.Urls.data.base + "/recipes/" + this.state.noOfRecipes + ".json",
                 data: JSON.stringify(recipeData),
                 success: function success() {
                     _this3.setState({
@@ -1487,7 +1483,7 @@ var AddPage = function (_React$Component) {
 
 exports.default = AddPage;
 
-},{"../components/categories/category-selectors":4,"../components/global/option":7,"../components/global/spinner":8,"../components/recipes/ingredient":9,"../components/recipes/instruction":10,"jquery":22,"react":258,"react-router":53}],17:[function(require,module,exports){
+},{"../components/categories/category-selectors":4,"../components/global/option":7,"../components/global/spinner":8,"../components/recipes/ingredient":9,"../components/recipes/instruction":10,"../config/constants":13,"../data/data-handling":14,"react":258,"react-router":53}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

@@ -1,8 +1,8 @@
 import React from 'react';
-import jQuery from 'jquery';
-
 import {Link} from 'react-router';
 
+import {Urls} from '../config/constants';
+import {handleData} from '../data/data-handling';
 import CategorySelectors from '../components/categories/category-selectors';
 import Option from '../components/global/option';
 import Spinner from '../components/global/spinner';
@@ -163,17 +163,17 @@ export default class AddPage extends React.Component {
 	}
 
 	_getRecipes() {
-		jQuery.ajax({
-			method: 'GET',
-			url: 'https://meels-f1766.firebaseio.com/recipes.json',
-			success: (recipesObj) => {
 
-				this.setState({
-					noOfRecipes: recipesObj.length
-				});
-
-			}
-		});
+        // perform request for recipes data
+        handleData({
+            method: 'GET',
+            url: Urls.data.recipes,
+            success: (recipesObj) => {
+                this.setState({
+                    noOfRecipes: recipesObj.length
+                });
+            }
+        });
 	}
 
 	_setTags(event) {
@@ -277,9 +277,10 @@ export default class AddPage extends React.Component {
 
         this.setState({waitingForAddRecipe: true});
 
-		jQuery.ajax({
-			method: 'PUT',
-			url: "https://meels-f1766.firebaseio.com/recipes/" + this.state.noOfRecipes + ".json",
+        // perform request for recipes data
+        handleData({
+            method: 'PUT',
+            url: Urls.data.base + "/recipes/" + this.state.noOfRecipes + ".json",
 			data: JSON.stringify(recipeData),
 			success: () => {
                 this.setState({

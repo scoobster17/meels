@@ -1,6 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router';
-import jQuery from 'jquery';
+
+import {Urls} from '../../config/constants';
+import {handleData} from '../../data/data-handling';
 
 export default class RecipePage extends React.Component {
 
@@ -110,9 +112,9 @@ export default class RecipePage extends React.Component {
 	}
 
 	_getRecipeDetails(recipeToFindId) {
-		jQuery.ajax({
+		handleData({
 			method: 'GET',
-			url: "https://meels-f1766.firebaseio.com/recipes/" + recipeToFindId + ".json",
+			url: Urls.data.base + "/recipes/" + recipeToFindId + ".json",
 			success: (recipeObj) => {
 				this.setState({
 					recipe: recipeObj

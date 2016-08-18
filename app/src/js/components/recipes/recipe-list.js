@@ -1,7 +1,8 @@
 import React from 'react';
-import RecipePreview from './recipe-preview';
 
-import jQuery from 'jquery';
+import {Urls} from '../../config/constants';
+import {handleData} from '../../data/data-handling';
+import RecipePreview from './recipe-preview';
 
 export default class RecipeList extends React.Component {
 
@@ -20,9 +21,9 @@ export default class RecipeList extends React.Component {
 
     _getRecipes() {
 
-        jQuery.ajax({
+        handleData({
             method: 'GET',
-            url: 'https://meels-f1766.firebaseio.com/recipes.json',
+            url: Urls.data.recipes,
             success: (recipes) => {
 
                 let noOfRecipes = recipes.length;
@@ -62,6 +63,10 @@ export default class RecipeList extends React.Component {
                     noOfRecipes: noOfRecipes
                 });
 
+            },
+            error: () => {
+                // TODO user feedback
+                console.log('Error with data');
             }
         });
 

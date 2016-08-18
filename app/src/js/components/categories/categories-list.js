@@ -29,16 +29,10 @@ export default class CategoriesList extends React.Component {
     _getTags() {
 
         // perform request for recipes data
-        handleData(
-
-            // method
-            'GET',
-
-            // url
-            Urls.data.recipes,
-
-            // success callback
-            (recipes) => {
+        handleData({
+            method: 'GET',
+            url: Urls.data.recipes,
+            success: (recipes) => {
 
                 const noOfRecipes = recipes.length;
                 let categoriesFound = [];
@@ -73,12 +67,10 @@ export default class CategoriesList extends React.Component {
                     })
                 })
             },
-
-            // error callback
-            () => {
+            error: () => {
                 // user friendly error to be implemented
                 console.log('Error getting data');
             }
-        );
+        });
     }
 }

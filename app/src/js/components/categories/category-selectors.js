@@ -1,7 +1,7 @@
 import React from 'react';
 
-import jQuery from 'jquery';
-
+import {Urls} from '../../config/constants';
+import {handleData} from '../../data/data-handling';
 import CategoryOption from './category-option';
 
 export default class CategorySelectors extends React.Component {
@@ -29,9 +29,9 @@ export default class CategorySelectors extends React.Component {
 	}
 
 	_getCategories() {
-		jQuery.ajax({
+		handleData({
 			method: 'GET',
-			url: 'https://meels-f1766.firebaseio.com/categories.json',
+			url: Urls.data.categories,
 			success: (categories) => {
 				this.setState({
 					tags: categories.map((category, index) => {
@@ -40,6 +40,10 @@ export default class CategorySelectors extends React.Component {
 						)
 					})
 				})
+			},
+			error: () => {
+				// TODO user feedback
+				console.log('Error with data');
 			}
 		})
 	}
