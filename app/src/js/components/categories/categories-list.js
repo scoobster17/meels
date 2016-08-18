@@ -1,7 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-import jQuery from 'jquery';
+import {Urls} from '../../config/constants';
+import {handleData} from '../../data/data-handling';
 
 export default class CategoriesList extends React.Component {
 
@@ -26,10 +27,18 @@ export default class CategoriesList extends React.Component {
     }
 
     _getTags() {
-        jQuery.ajax({
-            method: 'GET',
-            url: 'https://meels-f1766.firebaseio.com/recipes.json',
-            success: (recipes) => {
+
+        // perform request for recipes data
+        handleData(
+
+            // method
+            'GET',
+
+            // url
+            Urls.data.recipes,
+
+            // success callback
+            (recipes) => {
 
                 const noOfRecipes = recipes.length;
                 let categoriesFound = [];
@@ -63,7 +72,13 @@ export default class CategoriesList extends React.Component {
                         )
                     })
                 })
+            },
+
+            // error callback
+            () => {
+                // user friendly error to be implemented
+                console.log('Error getting data');
             }
-        })
+        );
     }
 }
