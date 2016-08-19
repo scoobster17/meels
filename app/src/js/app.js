@@ -5,7 +5,11 @@
 // React
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {hashHistory, Router, Route, Redirect} from 'react-router';
+import { hashHistory, Router, Route, Redirect } from 'react-router';
+
+// Redux
+// import { createStore } from 'redux';
+// import { Provider } from 'react-redux';
 
 // Page layout
 import Layout from './layout/layout';
@@ -16,6 +20,8 @@ import CategoriesPage from './pages/categories';
 import ListPage from './pages/list';
 import RecipePage from './pages/recipe';
 import AddPage from './pages/add';
+
+// let store = createStore({});
 
 /******************************************************************************/
 // ROUTING

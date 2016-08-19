@@ -16,7 +16,7 @@ export default class AddPage extends React.Component {
 
 		this.state = {
 			noOfRecipes: 0,
-			waitingForAddRecipe: false,
+			waitingForAddRecipeResponse: false,
             recipeAdded: false,
 			selectedTags: [],
             ingredients: [
@@ -145,7 +145,7 @@ export default class AddPage extends React.Component {
 
     					{
     						// show the spinner only if the submission is awaiting a response
-    						this.state.waitingForAddRecipe && <Spinner />
+    						this.state.waitingForAddRecipeResponse && <Spinner />
     					}
     				</form>
 
@@ -275,7 +275,7 @@ export default class AddPage extends React.Component {
             recipeData.instructions.push(instruction.value)
         });
 
-        this.setState({waitingForAddRecipe: true});
+        this.setState({waitingForAddRecipeResponse: true});
 
         // perform request for recipes data
         handleData({
@@ -285,14 +285,14 @@ export default class AddPage extends React.Component {
 			success: () => {
                 this.setState({
                 	recipeAdded: true,
-                	waitingForAddRecipe: false
+                	waitingForAddRecipeResponse: false
                 });
                 form.reset();
 			},
             error: () => {
                 // to add feedback message to user
                 this.setState({
-                    waitingForAddRecipe: false
+                    waitingForAddRecipeResponse: false
                 });
             }
 		});

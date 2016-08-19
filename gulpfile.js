@@ -50,7 +50,8 @@ var filePaths = {
     categoriesDataSeed: 'data/categories-seed.json',
     restApiDataUrl: 'https://console.firebase.google.com/project/meels-f1766/database/data',
     recipesDataUrl: 'https://meels-f1766.firebaseio.com/recipes.json',
-    categoriesDataUrl: 'https://meels-f1766.firebaseio.com/categories.json'
+    categoriesDataUrl: 'https://meels-f1766.firebaseio.com/categories.json',
+    tests: 'test/**/*.js'
 }
 
 /* ************************************************************************** */
@@ -186,6 +187,11 @@ gulp.task('watch', function() {
         gulp.start('start-server');
     });
 
+    // watch for changes to test files
+    watch([filePaths.tests], function() {
+        gulp.start('test');
+    });
+
     // start app server
 	gulp.start('start-server');
 });
@@ -196,3 +202,16 @@ gulp.task('watch', function() {
 gulp.task('force-watch', ['kill-server-process'], function() {
     gulp.start('watch');
 });
+
+/* ************************************************************************** */
+
+/* TESTING */
+
+/**
+ * Task to run mocha tests
+ */
+gulp.task('test', ['js'], shell.task([
+    "mocha --compilers js:babel-core/register"
+]));
+
+/* ************************************************************************** */
