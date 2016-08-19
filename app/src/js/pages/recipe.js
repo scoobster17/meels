@@ -1,8 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-import {Urls} from '../../config/constants';
-import {handleData} from '../../data/data-handling';
+import {Urls} from '../config/constants';
+import {handleData} from '../data/data-handling';
 
 export default class RecipePage extends React.Component {
 

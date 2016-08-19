@@ -1738,9 +1738,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
-var _jquery = require('jquery');
+var _constants = require('../config/constants');
 
-var _jquery2 = _interopRequireDefault(_jquery);
+var _dataHandling = require('../data/data-handling');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1939,9 +1939,9 @@ var RecipePage = function (_React$Component) {
 		value: function _getRecipeDetails(recipeToFindId) {
 			var _this2 = this;
 
-			_jquery2.default.ajax({
+			(0, _dataHandling.handleData)({
 				method: 'GET',
-				url: "https://meels-f1766.firebaseio.com/recipes/" + recipeToFindId + ".json",
+				url: _constants.Urls.data.base + "/recipes/" + recipeToFindId + ".json",
 				success: function success(recipeObj) {
 					_this2.setState({
 						recipe: recipeObj
@@ -1956,7 +1956,7 @@ var RecipePage = function (_React$Component) {
 
 exports.default = RecipePage;
 
-},{"jquery":22,"react":258,"react-router":53}],21:[function(require,module,exports){
+},{"../config/constants":13,"../data/data-handling":14,"react":258,"react-router":53}],21:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
