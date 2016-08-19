@@ -42,3 +42,8 @@ li {
 a {
 	@include font-size(1.6);
 }
+.visibly-hidden {
+	left:-999em;
+	position:absolute;
+	top:-999em;
+}
