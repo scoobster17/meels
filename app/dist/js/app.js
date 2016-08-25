@@ -560,11 +560,10 @@ var Spinner = function (_React$Component) {
 			return _react2.default.createElement(
 				"div",
 				{ className: "spinner" },
-				_react2.default.createElement("i", { className: "icon-spin4 animate-spin" }),
 				_react2.default.createElement(
 					"p",
-					null,
-					"Loading…"
+					{ className: "animate-spin" },
+					"loading..."
 				)
 			);
 		}

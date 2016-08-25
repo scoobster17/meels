@@ -1,18 +1,16 @@
 .spinner {
   background:rgba(255,255,255,.8);
-  height:55%;
+  height:60%;
   left:0;
-  padding:45% 0 0;
+  margin: -10% 0 0 -10%;
+  padding:60% 0 0;
   position:fixed;
   text-align: center;
   top:0;
-  width:100%;
-  i {
-    @include font-size(3.2);
-    margin: 0 0 10px;
-  }
+  width:120%;
   p {
-    margin:0 0 0 20px;
+    font-family: icomoon;
+    @include font-size(3.2);
   }
 }
 
