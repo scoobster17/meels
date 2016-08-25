@@ -5,14 +5,14 @@ export default class GlobalHeader extends React.Component {
     render() {
         return (
             <header className="globalHeader">
-                <Link to="/home">
+                <Link to="/">
                     <img src="assets/img/logo.jpg" width="60" />
                     Meels<span className="visibly-hidden"> home page</span>
                 </Link>
                 <nav className="globalNav">
                     <ul>
                         <li>
-                            <Link to="/home">
+                            <Link to="/">
                                 Home
                             </Link>
                         </li>

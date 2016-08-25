@@ -1,12 +1,14 @@
-export default function recipesReducer(state = {}, action) {
+function categories(state = {}, action) {
     switch (action.type) {
         case 'GET':
             return {
                 ...state,
-                waitingForAddRecipeResponse: true
+                waitingForAddCategoryResponse: true
             }
             break;
         default:
             return state;
     }
 };
+
+export default categories;
