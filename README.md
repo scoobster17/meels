@@ -6,7 +6,7 @@ Record your favourite meals - or Meels - in your own, digital recipe book.
 Prerequisites
 -------------
 
-You will need to have ```node``` installed, along with ```npm``` (included with newer node versions).
+You will need to have ```node``` installed (developed with v 4.4.4), along with ```npm``` (included with newer node versions).
 
 Once you have cloned the repo, please navigate to the root directory and run ```npm install``` to install dependencies.
 
