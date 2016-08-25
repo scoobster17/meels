@@ -14,19 +14,23 @@ var app = express();
 
 app.use( express.static(__dirname + "/../app") );
 
-app.use(express.static('data'));
-app.use('/data', express.static('data'));
-
-// app.use(express.static('bower_components'));
-// app.use('/bower_components', express.static('bower_components'));
-
-/*
-app.get('/', function(req, res) {
-	fs.readFile( __dirname + '../app/index.html', 'utf8', function(err, data) {
-		res.end(data);
-	});
+// re-directs for when page is refreshed
+// these need to somehow go to routes on reload if possible?
+app.get('/home', function(req, res) {
+    res.redirect('/');
 });
-*/
+app.get('/recipes', function(req, res) {
+    res.redirect('/');
+});
+app.get('/recipes/:id', function(req, res) {
+    res.redirect('/');
+});
+app.get('/categories', function(req, res) {
+    res.redirect('/');
+});
+app.get('/newRecipe', function(req, res) {
+    res.redirect('/');
+});
 
 /* ************************************************************************** */
 
@@ -34,9 +38,9 @@ app.get('/', function(req, res) {
 
 var server = app.listen(4331, function() {
 
-	var host = server.address().address;
-	var port = server.address().port;
+    var host = server.address().address;
+    var port = server.address().port;
 
-	console.log("Meels app listening @ http://%s:%s", host, port);
+    console.log("Meels app listening @ http://%s:%s", host, port);
 
 });
