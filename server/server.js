@@ -38,9 +38,9 @@ app.get('/newRecipe', function(req, res) {
 
 var server = app.listen(4331, function() {
 
-	var host = server.address().address;
-	var port = server.address().port;
+    var host = server.address().address;
+    var port = server.address().port;
 
-	console.log("Meels app listening @ http://%s:%s", host, port);
+    console.log("Meels app listening @ http://%s:%s", host, port);
 
 });
