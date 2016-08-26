@@ -1,12 +1,32 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.requestAddRecipe = requestAddRecipe;
+exports.addRecipeSuccess = addRecipeSuccess;
+exports.addRecipeError = addRecipeError;
 // increment
-/*export function increment(index) {
+function requestAddRecipe() {
     return {
-        type: 'INCREMENT_LIKES',
-        index
-    }
-}*/
-"use strict";
+        type: 'ADD_RECIPE'
+    };
+}
+
+// increment
+function addRecipeSuccess() {
+    return {
+        type: 'ADD_RECIPE_SUCCESS'
+    };
+}
+
+// increment
+function addRecipeError() {
+    return {
+        type: 'ADD_RECIPE_ERROR'
+    };
+}
 
 },{}],2:[function(require,module,exports){
 'use strict';
@@ -29,7 +49,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // app dependencies
 // React dependencies
 
-},{"./config/routes":15,"react":284,"react-dom":30}],3:[function(require,module,exports){
+},{"./config/routes":16,"react":284,"react-dom":30}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -890,6 +910,42 @@ var Urls = exports.Urls = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.mapStateToProps = mapStateToProps;
+exports.mapDispatchToProps = mapDispatchToProps;
+
+var _redux = require('redux');
+
+var _reactRedux = require('react-redux');
+
+var _actionCreators = require('../actions/actionCreators');
+
+var actionCreators = _interopRequireWildcard(_actionCreators);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+// map the state to the react props
+function mapStateToProps(state) {
+    return {
+        recipes: state.recipes,
+        categories: state.categories
+    };
+}
+
+// map the dispatch and action creators to the react props
+
+
+// Redux action creators
+// Redux dependencies
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)(actionCreators, dispatch);
+}
+
+},{"../actions/actionCreators":1,"react-redux":33,"redux":290}],16:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
 var _react = require('react');
 
@@ -903,9 +959,9 @@ var _store = require('./store');
 
 var _store2 = _interopRequireDefault(_store);
 
-var _mapping = require('../containers/mapping');
+var _layout = require('../containers/layout');
 
-var _mapping2 = _interopRequireDefault(_mapping);
+var _layout2 = _interopRequireDefault(_layout);
 
 var _home = require('../pages/home');
 
@@ -942,7 +998,7 @@ var routes = _react2.default.createElement(
         { history: _store.history },
         _react2.default.createElement(
             _reactRouter.Route,
-            { path: '/', component: _mapping2.default },
+            { path: '/', component: _layout2.default },
             _react2.default.createElement(_reactRouter.IndexRoute, { component: _home2.default }),
             _react2.default.createElement(_reactRouter.Route, { path: 'categories', component: _categories2.default }),
             _react2.default.createElement(_reactRouter.Route, { path: 'recipes', component: _list2.default }),
@@ -954,7 +1010,7 @@ var routes = _react2.default.createElement(
 
 exports.default = routes;
 
-},{"../containers/mapping":18,"../pages/add":20,"../pages/categories":21,"../pages/home":22,"../pages/list":23,"../pages/recipe":24,"./store":16,"react":284,"react-redux":33,"react-router":79}],16:[function(require,module,exports){
+},{"../containers/layout":18,"../pages/add":20,"../pages/categories":21,"../pages/home":22,"../pages/list":23,"../pages/recipe":24,"./store":17,"react":284,"react-redux":33,"react-router":79}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1000,7 +1056,7 @@ var history = exports.history = (0, _reactRouterRedux.syncHistoryWithStore)(_rea
 
 exports.default = store;
 
-},{"../reducers/root":27,"react-router":79,"react-router-redux":46,"redux":290}],17:[function(require,module,exports){
+},{"../reducers/root":27,"react-router":79,"react-router-redux":46,"redux":290}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1013,9 +1069,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = require('react-dom');
+var _reactRedux = require('react-redux');
 
-var _reactDom2 = _interopRequireDefault(_reactDom);
+var _mapping = require('../config/mapping.js');
 
 var _globalHeader = require('../components/global/global-header');
 
@@ -1031,11 +1087,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /******************************************************************************/
-// DEPENDENCIES
-/******************************************************************************/
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // React dependencies
 
-// React
+
+// Redux dependencies
+
+
+// App dependencies
 
 
 /******************************************************************************/
@@ -1060,7 +1118,7 @@ var Layout = function (_React$Component) {
 				_react2.default.createElement(_globalHeader2.default, null),
 
 				// page content
-				this.props.children,
+				_react2.default.cloneElement(this.props.children, this.props),
 				_react2.default.createElement(_globalFooter2.default, null)
 			);
 		}
@@ -1069,57 +1127,9 @@ var Layout = function (_React$Component) {
 	return Layout;
 }(_react2.default.Component);
 
-exports.default = Layout;
+exports.default = (0, _reactRedux.connect)(_mapping.mapStateToProps, _mapping.mapDispatchToProps)(Layout);
 
-},{"../components/global/global-footer":6,"../components/global/global-header":7,"react":284,"react-dom":30}],18:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _redux = require('redux');
-
-var _reactRedux = require('react-redux');
-
-var _actionCreators = require('../actions/actionCreators');
-
-var actionCreators = _interopRequireWildcard(_actionCreators);
-
-var _layout = require('./layout');
-
-var _layout2 = _interopRequireDefault(_layout);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-// map the state to the react props
-
-
-// Redux action creators
-// Redux dependencies
-function mapStateToProps(state) {
-    return {
-        recipes: state.recipes,
-        categories: state.categories
-    };
-}
-
-// map the dispatch and action creators to the react props
-
-
-// Page layout
-function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)(actionCreators, dispatch);
-}
-
-// Connect the state and dispatch to the Layout component
-var App = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_layout2.default);
-
-exports.default = App;
-
-},{"../actions/actionCreators":1,"./layout":17,"react-redux":33,"redux":290}],19:[function(require,module,exports){
+},{"../components/global/global-footer":6,"../components/global/global-header":7,"../config/mapping.js":15,"react":284,"react-redux":33}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1182,7 +1192,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // React dependencies
+
+
+// App dependencies
+
 
 var AddPage = function (_React$Component) {
     _inherits(AddPage, _React$Component);
@@ -1194,7 +1208,6 @@ var AddPage = function (_React$Component) {
 
         _this.state = {
             noOfRecipes: 0,
-            waitingForAddRecipeResponse: false,
             recipeAdded: false,
             selectedTags: [],
             ingredients: [_react2.default.createElement(_ingredient2.default, { index: '1', key: '0' })],
@@ -1246,7 +1259,7 @@ var AddPage = function (_React$Component) {
                 ),
 
                 // if recipe not yet added show form
-                !this.state.recipeAdded ? _react2.default.createElement(
+                !this.props.recipes.recipeAdded ? _react2.default.createElement(
                     'form',
                     { id: 'addRecipeForm', onSubmit: this._saveRecipe },
                     _react2.default.createElement(
@@ -1444,7 +1457,7 @@ var AddPage = function (_React$Component) {
                     _react2.default.createElement('input', { type: 'submit' }),
 
                     // show the spinner only if the submission is awaiting a response
-                    this.state.waitingForAddRecipeResponse && _react2.default.createElement(_spinner2.default, null)
+                    this.props.recipes.waitingForAddRecipeResponse && _react2.default.createElement(_spinner2.default, null)
                 ) :
 
                 // Show the above message if the recipe has been added
@@ -1581,7 +1594,7 @@ var AddPage = function (_React$Component) {
                 recipeData.instructions.push(instruction.value);
             });
 
-            this.setState({ waitingForAddRecipeResponse: true });
+            this.props.requestAddRecipe();
 
             // perform request for recipes data
             (0, _dataHandling.handleData)({
@@ -1589,17 +1602,12 @@ var AddPage = function (_React$Component) {
                 url: _constants.Urls.data.base + "/recipes/" + this.state.noOfRecipes + ".json",
                 data: JSON.stringify(recipeData),
                 success: function success() {
-                    _this3.setState({
-                        recipeAdded: true,
-                        waitingForAddRecipeResponse: false
-                    });
+                    _this3.props.addRecipeSuccess();
                     form.reset();
                 },
                 error: function error() {
                     // to add feedback message to user
-                    _this3.setState({
-                        waitingForAddRecipeResponse: false
-                    });
+                    _this3.props.addRecipeError();
                 }
             });
         }
@@ -2123,9 +2131,20 @@ function recipes() {
     var action = arguments[1];
 
     switch (action.type) {
-        case 'GET':
+        case 'ADD_RECIPE':
             return _extends({}, state, {
                 waitingForAddRecipeResponse: true
+            });
+            break;
+        case 'ADD_RECIPE_SUCCESS':
+            return _extends({}, state, {
+                recipeAdded: true,
+                waitingForAddRecipeResponse: false
+            });
+            break;
+        case 'ADD_RECIPE_ERROR':
+            return _extends({}, state, {
+                waitingForAddRecipeResponse: false
             });
             break;
         default:

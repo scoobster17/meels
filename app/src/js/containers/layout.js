@@ -1,10 +1,11 @@
-/******************************************************************************/
-// DEPENDENCIES
-/******************************************************************************/
-
-// React
+// React dependencies
 import React from 'react';
-import ReactDOM from 'react-dom';
+
+// Redux dependencies
+import { connect } from 'react-redux';
+import { mapStateToProps, mapDispatchToProps } from '../config/mapping.js';
+
+// App dependencies
 import GlobalHeader from '../components/global/global-header';
 import GlobalFooter from '../components/global/global-footer';
 
@@ -12,17 +13,19 @@ import GlobalFooter from '../components/global/global-footer';
 // PAGE TEMPLATE CLASS
 /******************************************************************************/
 
-export default class Layout extends React.Component {
+class Layout extends React.Component {
 	render() {
 		return (
 			<div>
 				<GlobalHeader />
 				{
 					// page content
-					this.props.children
+					React.cloneElement(this.props.children, this.props)
 				}
 				<GlobalFooter />
 			</div>
 		)
 	}
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

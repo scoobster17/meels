@@ -1,6 +1,8 @@
+// React dependencies
 import React from 'react';
 import {Link} from 'react-router';
 
+// App dependencies
 import {Urls} from '../config/constants';
 import {handleData} from '../data/data-handling';
 import CategorySelectors from '../components/categories/category-selectors';
@@ -9,14 +11,13 @@ import Spinner from '../components/global/spinner';
 import Ingredient from '../components/recipes/ingredient';
 import Instruction from '../components/recipes/instruction';
 
-export default class AddPage extends React.Component {
+class AddPage extends React.Component {
 
 	constructor() {
 		super();
 
 		this.state = {
 			noOfRecipes: 0,
-			waitingForAddRecipeResponse: false,
             recipeAdded: false,
 			selectedTags: [],
             ingredients: [
@@ -63,7 +64,7 @@ export default class AddPage extends React.Component {
 				<h1>Add a new recipe</h1>
 				{
                     // if recipe not yet added show form
-                    !this.state.recipeAdded ?
+                    !this.props.recipes.recipeAdded ?
 
                     <form id="addRecipeForm" onSubmit={this._saveRecipe}>
                     	<p>Enter details for a new recipe here.</p>
@@ -145,9 +146,9 @@ export default class AddPage extends React.Component {
 
     					{
     						// show the spinner only if the submission is awaiting a response
-    						this.state.waitingForAddRecipeResponse && <Spinner />
+    						this.props.recipes.waitingForAddRecipeResponse && <Spinner />
     					}
-    				</form>
+                    </form>
 
                     :
 
@@ -275,7 +276,7 @@ export default class AddPage extends React.Component {
             recipeData.instructions.push(instruction.value)
         });
 
-        this.setState({waitingForAddRecipeResponse: true});
+        this.props.requestAddRecipe();
 
         // perform request for recipes data
         handleData({
@@ -283,19 +284,16 @@ export default class AddPage extends React.Component {
             url: Urls.data.base + "/recipes/" + this.state.noOfRecipes + ".json",
 			data: JSON.stringify(recipeData),
 			success: () => {
-                this.setState({
-                	recipeAdded: true,
-                	waitingForAddRecipeResponse: false
-                });
+                this.props.addRecipeSuccess();
                 form.reset();
 			},
             error: () => {
                 // to add feedback message to user
-                this.setState({
-                    waitingForAddRecipeResponse: false
-                });
+                this.props.addRecipeError();
             }
 		});
 
 	}
 }
+
+export default AddPage;
