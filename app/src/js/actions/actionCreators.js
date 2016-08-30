@@ -1,20 +1,24 @@
-// increment
-export function requestAddRecipe () {
+export function requestAddRecipe() {
     return {
         type: 'ADD_RECIPE'
     }
 }
 
-// increment
-export function addRecipeSuccess () {
+export function addRecipeSuccess() {
     return {
         type: 'ADD_RECIPE_SUCCESS'
     }
 }
 
-// increment
-export function addRecipeError () {
+export function addRecipeError() {
     return {
         type: 'ADD_RECIPE_ERROR'
+    }
+}
+
+export function receivedRecipes(recipes) {
+    return {
+        type: 'RECEIVED_RECIPES',
+        recipes
     }
 }

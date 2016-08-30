@@ -1,10 +1,16 @@
+// React dependencies
 import React from 'react';
 
+// Redux dependencies
+import { connect } from 'react-redux';
+import { mapStateToProps, mapDispatchToProps } from '../../config/mapping.js';
+
+// App dependencies
 import {Urls} from '../../config/constants';
 import {handleData} from '../../data/data-handling';
 import RecipePreview from './recipe-preview';
 
-export default class RecipeList extends React.Component {
+class RecipeList extends React.Component {
 
     constructor() {
         super();
@@ -25,6 +31,11 @@ export default class RecipeList extends React.Component {
             method: 'GET',
             url: Urls.data.recipes,
             success: (recipes) => {
+
+                // check returned as array
+                if (!Array.isArray(recipes)) {
+                    Object.assign([], recipes);
+                }
 
                 let noOfRecipes = recipes.length;
                 let recipesToShow = [];
@@ -54,14 +65,12 @@ export default class RecipeList extends React.Component {
 
                 }
 
-                this.setState({
-                    recipes: recipes.map((recipe) => {
-                        return (
-                            <RecipePreview name={recipe.name} tags={recipe.categories} key={recipe.id} id={recipe.id} />
-                        )
-                    }),
+                this.props.receivedRecipes(recipes);
+
+                /*this.setState({
+                    recipes: ,
                     noOfRecipes: noOfRecipes
-                });
+                });*/
 
             },
             error: () => {
@@ -73,11 +82,18 @@ export default class RecipeList extends React.Component {
     }
 
     render() {
-        //const recipes = this._getRecipes();
         return (
             <ul>
-                {this.state.recipes}
+                {
+                    this.props.recipes.list.map((recipe) => {
+                        return (
+                            <RecipePreview name={recipe.name} tags={recipe.categories} key={recipe.id} id={recipe.id} />
+                        )
+                    })
+                }
             </ul>
         )
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeList);

@@ -228,11 +228,15 @@ class AddPage extends React.Component {
         })
     }
 
-	_saveRecipe(event) {
-
-		event.preventDefault();
-
+    _resetForm() {
         let form = document.querySelector('#addRecipeForm');
+        if (form) form.reset();
+    }
+
+    _saveRecipe(event) {
+
+        event.preventDefault();
+
         let recipeData = {
             id: this.state.noOfRecipes,
             name: this.refs.recipeName.value,
@@ -285,7 +289,7 @@ class AddPage extends React.Component {
 			data: JSON.stringify(recipeData),
 			success: () => {
                 this.props.addRecipeSuccess();
-                form.reset();
+                _resetForm();
 			},
             error: () => {
                 // to add feedback message to user

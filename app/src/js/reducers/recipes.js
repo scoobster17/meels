@@ -1,5 +1,7 @@
 function recipes(state = {}, action) {
     switch (action.type) {
+
+        // add recipe
         case 'ADD_RECIPE':
             return {
                 ...state,
@@ -19,6 +21,16 @@ function recipes(state = {}, action) {
                 waitingForAddRecipeResponse: false
             }
             break;
+
+        // get recipes
+        case 'RECEIVED_RECIPES':
+            return {
+                ...state,
+                list: action.recipes
+            }
+            break;
+
+        // fallback
         default:
             return state;
     }

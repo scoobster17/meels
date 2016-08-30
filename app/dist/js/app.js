@@ -7,24 +7,29 @@ Object.defineProperty(exports, "__esModule", {
 exports.requestAddRecipe = requestAddRecipe;
 exports.addRecipeSuccess = addRecipeSuccess;
 exports.addRecipeError = addRecipeError;
-// increment
+exports.receivedRecipes = receivedRecipes;
 function requestAddRecipe() {
     return {
         type: 'ADD_RECIPE'
     };
 }
 
-// increment
 function addRecipeSuccess() {
     return {
         type: 'ADD_RECIPE_SUCCESS'
     };
 }
 
-// increment
 function addRecipeError() {
     return {
         type: 'ADD_RECIPE_ERROR'
+    };
+}
+
+function receivedRecipes(recipes) {
+    return {
+        type: 'RECEIVED_RECIPES',
+        recipes: recipes
     };
 }
 
@@ -730,6 +735,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = require('react-redux');
+
+var _mapping = require('../../config/mapping.js');
+
 var _constants = require('../../config/constants');
 
 var _dataHandling = require('../../data/data-handling');
@@ -744,7 +753,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // React dependencies
+
+
+// Redux dependencies
+
+
+// App dependencies
+
 
 var RecipeList = function (_React$Component) {
     _inherits(RecipeList, _React$Component);
@@ -776,6 +792,11 @@ var RecipeList = function (_React$Component) {
                 url: _constants.Urls.data.recipes,
                 success: function success(recipes) {
 
+                    // check returned as array
+                    if (!Array.isArray(recipes)) {
+                        Object.assign([], recipes);
+                    }
+
                     var noOfRecipes = recipes.length;
                     var recipesToShow = [];
 
@@ -802,12 +823,12 @@ var RecipeList = function (_React$Component) {
                         recipes = recipesToShow;
                     }
 
-                    _this2.setState({
-                        recipes: recipes.map(function (recipe) {
-                            return _react2.default.createElement(_recipePreview2.default, { name: recipe.name, tags: recipe.categories, key: recipe.id, id: recipe.id });
-                        }),
+                    _this2.props.receivedRecipes(recipes);
+
+                    /*this.setState({
+                        recipes: ,
                         noOfRecipes: noOfRecipes
-                    });
+                    });*/
                 },
                 error: function error() {
                     // TODO user feedback
@@ -818,11 +839,12 @@ var RecipeList = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            //const recipes = this._getRecipes();
             return _react2.default.createElement(
                 'ul',
                 null,
-                this.state.recipes
+                this.props.recipes.list.map(function (recipe) {
+                    return _react2.default.createElement(_recipePreview2.default, { name: recipe.name, tags: recipe.categories, key: recipe.id, id: recipe.id });
+                })
             );
         }
     }]);
@@ -830,9 +852,9 @@ var RecipeList = function (_React$Component) {
     return RecipeList;
 }(_react2.default.Component);
 
-exports.default = RecipeList;
+exports.default = (0, _reactRedux.connect)(_mapping.mapStateToProps, _mapping.mapDispatchToProps)(RecipeList);
 
-},{"../../config/constants":14,"../../data/data-handling":19,"./recipe-preview":13,"react":284}],13:[function(require,module,exports){
+},{"../../config/constants":14,"../../config/mapping.js":15,"../../data/data-handling":19,"./recipe-preview":13,"react":284,"react-redux":33}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1033,7 +1055,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Set the default state
 // React dependencies
 var defaultState = {
-    recipes: {},
+    recipes: {
+        list: []
+    },
     categories: {}
 };
 
@@ -1544,13 +1568,18 @@ var AddPage = function (_React$Component) {
             });
         }
     }, {
+        key: '_resetForm',
+        value: function _resetForm() {
+            var form = document.querySelector('#addRecipeForm');
+            if (form) form.reset();
+        }
+    }, {
         key: '_saveRecipe',
         value: function _saveRecipe(event) {
             var _this3 = this;
 
             event.preventDefault();
 
-            var form = document.querySelector('#addRecipeForm');
             var recipeData = {
                 id: this.state.noOfRecipes,
                 name: this.refs.recipeName.value,
@@ -1603,7 +1632,7 @@ var AddPage = function (_React$Component) {
                 data: JSON.stringify(recipeData),
                 success: function success() {
                     _this3.props.addRecipeSuccess();
-                    form.reset();
+                    _resetForm();
                 },
                 error: function error() {
                     // to add feedback message to user
@@ -2131,6 +2160,8 @@ function recipes() {
     var action = arguments[1];
 
     switch (action.type) {
+
+        // add recipe
         case 'ADD_RECIPE':
             return _extends({}, state, {
                 waitingForAddRecipeResponse: true
@@ -2147,6 +2178,15 @@ function recipes() {
                 waitingForAddRecipeResponse: false
             });
             break;
+
+        // get recipes
+        case 'RECEIVED_RECIPES':
+            return _extends({}, state, {
+                list: action.recipes
+            });
+            break;
+
+        // fallback
         default:
             return state;
     }

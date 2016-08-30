@@ -10,7 +10,9 @@ import rootReducer from '../reducers/root';
 
 // Set the default state
 const defaultState = {
-    recipes: {},
+    recipes: {
+        list: []
+    },
     categories: {}
 }
 
