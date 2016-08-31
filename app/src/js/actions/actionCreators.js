@@ -36,6 +36,12 @@ export function addInstructionToRecipe(instruction) {
 }
 
 // recipes list
+export function fetchingRecipes() {
+    return {
+        type: 'FETCHING_RECIPES'
+    }
+}
+
 export function receivedRecipes(recipes) {
     return {
         type: 'RECEIVED_RECIPES',

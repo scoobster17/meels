@@ -44,7 +44,8 @@ function recipes(state = {}, action) {
         case 'RECEIVED_RECIPES':
             return {
                 ...state,
-                list: action.recipes
+                list: action.recipes,
+                fetchingRecipes: false
             }
             break;
 
@@ -53,6 +54,13 @@ function recipes(state = {}, action) {
             return {
                 ...state,
                 currentRecipe: action.recipe
+            }
+            break;
+
+        case 'FETCHING_RECIPES':
+            return {
+                ...state,
+                fetchingRecipes: true
             }
             break;
 

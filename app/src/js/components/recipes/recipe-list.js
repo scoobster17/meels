@@ -10,6 +10,7 @@ import {Urls} from '../../config/constants';
 import {handleData} from '../../data/data-handling';
 import RecipePreview from './recipe-preview';
 import { convertRecipesToArray } from '../../utilities/utilities';
+import Spinner from '../global/spinner';
 
 class RecipeList extends React.Component {
 
@@ -18,6 +19,8 @@ class RecipeList extends React.Component {
     }
 
     _getRecipes() {
+
+        this.props.fetchingRecipes();
 
         handleData({
             method: 'GET',
@@ -70,6 +73,7 @@ class RecipeList extends React.Component {
         return (
             <ul>
                 {
+
                     this.props.recipes.list.length ?
                         this.props.recipes.list.map((recipe) => {
                             return (
@@ -77,8 +81,9 @@ class RecipeList extends React.Component {
                             )
                         })
                     :
-                    <p>You have no recipes saved yet.</p>
+                        <p>You have no recipes saved yet.</p>
                 }
+                {this.props.recipes.fetchingRecipes && <Spinner />}
             </ul>
         )
     }

@@ -9,6 +9,7 @@ exports.addRecipeSuccess = addRecipeSuccess;
 exports.addRecipeError = addRecipeError;
 exports.addIngredientToRecipe = addIngredientToRecipe;
 exports.addInstructionToRecipe = addInstructionToRecipe;
+exports.fetchingRecipes = fetchingRecipes;
 exports.receivedRecipes = receivedRecipes;
 exports.recipeReceived = recipeReceived;
 exports.categoriesReceived = categoriesReceived;
@@ -52,6 +53,12 @@ function addInstructionToRecipe(instruction) {
 }
 
 // recipes list
+function fetchingRecipes() {
+    return {
+        type: 'FETCHING_RECIPES'
+    };
+}
+
 function receivedRecipes(recipes) {
     return {
         type: 'RECEIVED_RECIPES',
@@ -832,6 +839,10 @@ var _recipePreview2 = _interopRequireDefault(_recipePreview);
 
 var _utilities = require('../../utilities/utilities');
 
+var _spinner = require('../global/spinner');
+
+var _spinner2 = _interopRequireDefault(_spinner);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -865,6 +876,8 @@ var RecipeList = function (_React$Component) {
         key: '_getRecipes',
         value: function _getRecipes() {
             var _this2 = this;
+
+            this.props.fetchingRecipes();
 
             (0, _dataHandling.handleData)({
                 method: 'GET',
@@ -920,7 +933,8 @@ var RecipeList = function (_React$Component) {
                     'p',
                     null,
                     'You have no recipes saved yet.'
-                )
+                ),
+                this.props.recipes.fetchingRecipes && _react2.default.createElement(_spinner2.default, null)
             );
         }
     }]);
@@ -930,7 +944,7 @@ var RecipeList = function (_React$Component) {
 
 exports.default = (0, _reactRedux.connect)(_mapping.mapStateToProps, _mapping.mapDispatchToProps)(RecipeList);
 
-},{"../../config/constants":14,"../../config/mapping.js":15,"../../data/data-handling":19,"../../utilities/utilities":28,"./recipe-preview":13,"react":505,"react-redux":254}],13:[function(require,module,exports){
+},{"../../config/constants":14,"../../config/mapping.js":15,"../../data/data-handling":19,"../../utilities/utilities":28,"../global/spinner":9,"./recipe-preview":13,"react":505,"react-redux":254}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2293,7 +2307,8 @@ function recipes() {
         // get recipes
         case 'RECEIVED_RECIPES':
             return _extends({}, state, {
-                list: action.recipes
+                list: action.recipes,
+                fetchingRecipes: false
             });
             break;
 
@@ -2301,6 +2316,12 @@ function recipes() {
         case 'RECIPE_RECEIVED':
             return _extends({}, state, {
                 currentRecipe: action.recipe
+            });
+            break;
+
+        case 'FETCHING_RECIPES':
+            return _extends({}, state, {
+                fetchingRecipes: true
             });
             break;
 
