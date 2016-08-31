@@ -10,6 +10,7 @@ exports.addRecipeError = addRecipeError;
 exports.receivedRecipes = receivedRecipes;
 exports.categoriesReceived = categoriesReceived;
 exports.categoriesFound = categoriesFound;
+exports.setSelectedTags = setSelectedTags;
 //////////////////////////////////////////////////
 // recipes
 //////////////////////////////////////////////////
@@ -58,6 +59,14 @@ function categoriesFound(categories) {
     return {
         type: 'CATEGORIES_FOUND',
         categories: categories
+    };
+}
+
+// update selected tags on add recipe page
+function setSelectedTags(tags) {
+    return {
+        type: 'UPDATE_SELECTED_TAGS',
+        tags: tags
     };
 }
 
@@ -178,7 +187,7 @@ var CategoriesList = function (_React$Component) {
                     for (var i = 0; i < noOfRecipes; i++) {
 
                         var currentRecipe = recipesArray[i];
-                        var noOfTags = currentRecipe.tags.length;
+                        var noOfTags = currentRecipe.tags ? currentRecipe.tags.length : 0;
 
                         // check if each tag is yet accounted for
                         for (var j = 0; j < noOfTags; j++) {
@@ -1098,7 +1107,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // React dependencies
 var defaultState = {
     recipes: {
-        list: []
+        list: [],
+        selectedTags: []
     },
     categories: {
         list: [],
@@ -1278,8 +1288,6 @@ var AddPage = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AddPage).call(this));
 
         _this.state = {
-            recipeAdded: false,
-            selectedTags: [],
             ingredients: [_react2.default.createElement(_ingredient2.default, { index: '1', key: '0' })],
             instructions: [_react2.default.createElement(_instruction2.default, { index: '1', key: '0' })]
         };
@@ -1543,7 +1551,7 @@ var AddPage = function (_React$Component) {
         value: function _setTags(event) {
 
             var checkbox = event.target;
-            var newTags = this.state.selectedTags.slice();
+            var newTags = this.props.recipes.selectedTags.slice();
 
             // if checked, add the tag to the tags array
             if (checkbox.checked) {
@@ -1555,9 +1563,8 @@ var AddPage = function (_React$Component) {
                 newTags.splice(tagToRemoveIndex, 1);
             }
 
-            this.setState({
-                selectedTags: newTags
-            });
+            // update the state with the selected tags
+            this.props.setSelectedTags(newTags);
         }
     }, {
         key: '_updateTotalTime',
@@ -1629,7 +1636,7 @@ var AddPage = function (_React$Component) {
                 },
                 ingredients: [],
                 instructions: [],
-                tags: this.state.selectedTags
+                tags: this.props.recipes.selectedTags
             };
 
             var ingredientNames = document.querySelectorAll('#addRecipeForm [name^=ingredient-name]');
@@ -2214,6 +2221,11 @@ function recipes() {
         case 'ADD_RECIPE_ERROR':
             return _extends({}, state, {
                 waitingForAddRecipeResponse: false
+            });
+            break;
+        case 'UPDATE_SELECTED_TAGS':
+            return _extends({}, state, {
+                selectedTags: action.tags
             });
             break;
 

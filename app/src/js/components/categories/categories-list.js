@@ -54,7 +54,7 @@ class CategoriesList extends React.Component {
                 for (let i=0; i<noOfRecipes; i++) {
 
                     const currentRecipe = recipesArray[i];
-                    const noOfTags = currentRecipe.tags.length;
+                    const noOfTags = currentRecipe.tags ? currentRecipe.tags.length : 0;
 
                     // check if each tag is yet accounted for
                     for (let j=0; j<noOfTags; j++) {

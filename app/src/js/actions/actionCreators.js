@@ -48,3 +48,11 @@ export function categoriesFound(categories) {
         categories
     }
 }
+
+// update selected tags on add recipe page
+export function setSelectedTags(tags) {
+    return {
+        type: 'UPDATE_SELECTED_TAGS',
+        tags
+    }
+}

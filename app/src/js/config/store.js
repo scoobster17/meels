@@ -11,7 +11,8 @@ import rootReducer from '../reducers/root';
 // Set the default state
 const defaultState = {
     recipes: {
-        list: []
+        list: [],
+        selectedTags: [],
     },
     categories: {
         list: [],

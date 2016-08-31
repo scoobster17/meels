@@ -21,6 +21,12 @@ function recipes(state = {}, action) {
                 waitingForAddRecipeResponse: false
             }
             break;
+        case 'UPDATE_SELECTED_TAGS':
+            return {
+                ...state,
+                selectedTags: action.tags
+            }
+            break;
 
         // get recipes
         case 'RECEIVED_RECIPES':

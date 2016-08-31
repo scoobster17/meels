@@ -18,8 +18,6 @@ class AddPage extends React.Component {
 		super();
 
 		this.state = {
-            recipeAdded: false,
-			selectedTags: [],
             ingredients: [
                 <Ingredient index="1" key="0" />
             ],
@@ -162,7 +160,7 @@ class AddPage extends React.Component {
 	_setTags(event) {
 
 		const checkbox = event.target;
-		let newTags = this.state.selectedTags.slice();
+		let newTags = this.props.recipes.selectedTags.slice();
 
 		// if checked, add the tag to the tags array
 		if (checkbox.checked) {
@@ -174,9 +172,8 @@ class AddPage extends React.Component {
 			newTags.splice(tagToRemoveIndex, 1);
 		}
 
-		this.setState({
-			selectedTags: newTags
-		});
+        // update the state with the selected tags
+        this.props.setSelectedTags(newTags);
 
 	}
 
@@ -243,7 +240,7 @@ class AddPage extends React.Component {
             },
             ingredients: [],
             instructions: [],
-            tags: this.state.selectedTags
+            tags: this.props.recipes.selectedTags
         };
 
         const ingredientNames = document.querySelectorAll('#addRecipeForm [name^=ingredient-name]');
