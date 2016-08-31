@@ -9,7 +9,8 @@ function categories(state = {}, action) {
         case 'CATEGORIES_RECEIVED':
             return {
                 ...state,
-                list: action.categories
+                list: action.categories,
+                fetchingCategories: false
             }
             break;
         case 'CATEGORIES_FOUND':

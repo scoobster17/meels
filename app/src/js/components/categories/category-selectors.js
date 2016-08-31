@@ -9,6 +9,7 @@ import { mapStateToProps, mapDispatchToProps } from '../../config/mapping.js';
 import {Urls} from '../../config/constants';
 import {handleData} from '../../data/data-handling';
 import CategoryOption from './category-option';
+import Spinner from '../global/spinner';
 
 class CategorySelectors extends React.Component {
 
@@ -31,11 +32,15 @@ class CategorySelectors extends React.Component {
 					:
 						<p>No categories found, please try again later or contact the app creator.</p>
 				}
+				{ this.props.categories.fetchingCategories && <Spinner /> }
 			</fieldset>
 		)
 	}
 
 	_getCategories() {
+
+		this.props.fetchingCategories();
+
 		handleData({
 			method: 'GET',
 			url: Urls.data.categories,

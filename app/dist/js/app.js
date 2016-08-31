@@ -337,6 +337,10 @@ var _categoryOption = require('./category-option');
 
 var _categoryOption2 = _interopRequireDefault(_categoryOption);
 
+var _spinner = require('../global/spinner');
+
+var _spinner2 = _interopRequireDefault(_spinner);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -390,13 +394,16 @@ var CategorySelectors = function (_React$Component) {
 					'p',
 					null,
 					'No categories found, please try again later or contact the app creator.'
-				)
+				),
+				this.props.categories.fetchingCategories && _react2.default.createElement(_spinner2.default, null)
 			);
 		}
 	}, {
 		key: '_getCategories',
 		value: function _getCategories() {
 			var _this3 = this;
+
+			this.props.fetchingCategories();
 
 			(0, _dataHandling.handleData)({
 				method: 'GET',
@@ -417,7 +424,7 @@ var CategorySelectors = function (_React$Component) {
 
 exports.default = (0, _reactRedux.connect)(_mapping.mapStateToProps, _mapping.mapDispatchToProps)(CategorySelectors);
 
-},{"../../config/constants":14,"../../config/mapping.js":15,"../../data/data-handling":19,"./category-option":4,"react":505,"react-redux":254}],6:[function(require,module,exports){
+},{"../../config/constants":14,"../../config/mapping.js":15,"../../data/data-handling":19,"../global/spinner":9,"./category-option":4,"react":505,"react-redux":254}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2258,7 +2265,8 @@ function categories() {
             break;
         case 'CATEGORIES_RECEIVED':
             return _extends({}, state, {
-                list: action.categories
+                list: action.categories,
+                fetchingCategories: false
             });
             break;
         case 'CATEGORIES_FOUND':
