@@ -12,14 +12,6 @@ import CategoryOption from './category-option';
 
 class CategorySelectors extends React.Component {
 
-	constructor() {
-		super();
-
-		this.state = {
-			tags: []
-		}
-	}
-
 	componentWillMount() {
 		this._getCategories();
 	}

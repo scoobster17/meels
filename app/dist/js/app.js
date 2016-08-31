@@ -303,12 +303,7 @@ var CategorySelectors = function (_React$Component) {
 	function CategorySelectors() {
 		_classCallCheck(this, CategorySelectors);
 
-		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CategorySelectors).call(this));
-
-		_this.state = {
-			tags: []
-		};
-		return _this;
+		return _possibleConstructorReturn(this, Object.getPrototypeOf(CategorySelectors).apply(this, arguments));
 	}
 
 	_createClass(CategorySelectors, [{
