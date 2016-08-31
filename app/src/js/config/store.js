@@ -14,7 +14,8 @@ const defaultState = {
         list: []
     },
     categories: {
-        list: []
+        list: [],
+        used: []
     }
 }
 

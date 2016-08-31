@@ -1,10 +1,16 @@
+// React dependencies
 import React from 'react';
 
+// Redux dependencies
+import { connect } from 'react-redux';
+import { mapStateToProps, mapDispatchToProps } from '../../config/mapping.js';
+
+// App dependencies
 import {Urls} from '../../config/constants';
 import {handleData} from '../../data/data-handling';
 import CategoryOption from './category-option';
 
-export default class CategorySelectors extends React.Component {
+class CategorySelectors extends React.Component {
 
 	constructor() {
 		super();
@@ -23,7 +29,16 @@ export default class CategorySelectors extends React.Component {
 			<fieldset>
 				<h2>Categories</h2>
 				<p>Add some tags to your recipe to make it easier to find later. Make sure you only add the recipe to relevant categories!</p>
-				{this.state.tags}
+				{
+					this.props.categories.list.length ?
+						this.props.categories.list.map((category, index) => {
+							return (
+								<CategoryOption type="checkbox" value={category.name} id={category.id} label={category.name} key={index} setTags={this.props.setTags} />
+							)
+						})
+					:
+						<p>No categories found, please try again later or contact the app creator.</p>
+				}
 			</fieldset>
 		)
 	}
@@ -33,13 +48,7 @@ export default class CategorySelectors extends React.Component {
 			method: 'GET',
 			url: Urls.data.categories,
 			success: (categories) => {
-				this.setState({
-					tags: categories.map((category, index) => {
-						return (
-							<CategoryOption type="checkbox" value={category.name} id={category.id} label={category.name} key={index} setTags={this.props.setTags} />
-						)
-					})
-				})
+				this.props.categoriesReceived(categories);
 			},
 			error: () => {
 				// TODO user feedback
@@ -48,3 +57,5 @@ export default class CategorySelectors extends React.Component {
 		})
 	}
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategorySelectors);

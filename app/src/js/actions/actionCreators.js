@@ -1,3 +1,8 @@
+//////////////////////////////////////////////////
+// recipes
+//////////////////////////////////////////////////
+
+// add recipe
 export function requestAddRecipe() {
     return {
         type: 'ADD_RECIPE'
@@ -16,6 +21,7 @@ export function addRecipeError() {
     }
 }
 
+// recipes list
 export function receivedRecipes(recipes) {
     return {
         type: 'RECEIVED_RECIPES',
@@ -23,6 +29,19 @@ export function receivedRecipes(recipes) {
     }
 }
 
+//////////////////////////////////////////////////
+// categories
+//////////////////////////////////////////////////
+
+// categories list
+export function categoriesReceived(categories) {
+    return {
+        type: 'CATEGORIES_RECEIVED',
+        categories
+    }
+}
+
+// categories used in save recipes
 export function categoriesFound(categories) {
     return {
         type: 'CATEGORIES_FOUND',

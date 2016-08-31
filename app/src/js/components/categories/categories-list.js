@@ -1,14 +1,14 @@
 // React dependencies
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 
 // Redux dependencies
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from '../../config/mapping.js';
 
 // App dependencies
-import {Urls} from '../../config/constants';
-import {handleData} from '../../data/data-handling';
+import { Urls } from '../../config/constants';
+import { handleData } from '../../data/data-handling';
 import { convertRecipesToArray } from '../../utilities/utilities';
 
 class CategoriesList extends React.Component {
@@ -21,12 +21,12 @@ class CategoriesList extends React.Component {
         return (
             <ul>
                 {
-                    this.props.categories.list.length ?
-                        this.props.categories.list.sort().map((category, index) => {
+                    this.props.categories.used.length ?
+                        this.props.categories.used.sort().map((category, index) => {
                             return (
                                 <li key={index}>
                                     <Link to={'/recipes?category=' + category.toLowerCase()}>
-                                        {category}
+                                        { category }
                                     </Link>
                                 </li>
                             )

@@ -8,7 +8,13 @@ exports.requestAddRecipe = requestAddRecipe;
 exports.addRecipeSuccess = addRecipeSuccess;
 exports.addRecipeError = addRecipeError;
 exports.receivedRecipes = receivedRecipes;
+exports.categoriesReceived = categoriesReceived;
 exports.categoriesFound = categoriesFound;
+//////////////////////////////////////////////////
+// recipes
+//////////////////////////////////////////////////
+
+// add recipe
 function requestAddRecipe() {
     return {
         type: 'ADD_RECIPE'
@@ -27,6 +33,7 @@ function addRecipeError() {
     };
 }
 
+// recipes list
 function receivedRecipes(recipes) {
     return {
         type: 'RECEIVED_RECIPES',
@@ -34,6 +41,19 @@ function receivedRecipes(recipes) {
     };
 }
 
+//////////////////////////////////////////////////
+// categories
+//////////////////////////////////////////////////
+
+// categories list
+function categoriesReceived(categories) {
+    return {
+        type: 'CATEGORIES_RECEIVED',
+        categories: categories
+    };
+}
+
+// categories used in save recipes
 function categoriesFound(categories) {
     return {
         type: 'CATEGORIES_FOUND',
@@ -122,7 +142,7 @@ var CategoriesList = function (_React$Component) {
             return _react2.default.createElement(
                 'ul',
                 null,
-                this.props.categories.list.length ? this.props.categories.list.sort().map(function (category, index) {
+                this.props.categories.used.length ? this.props.categories.used.sort().map(function (category, index) {
                     return _react2.default.createElement(
                         'li',
                         { key: index },
@@ -250,6 +270,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = require('react-redux');
+
+var _mapping = require('../../config/mapping.js');
+
 var _constants = require('../../config/constants');
 
 var _dataHandling = require('../../data/data-handling');
@@ -264,7 +288,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // React dependencies
+
+
+// Redux dependencies
+
+
+// App dependencies
+
 
 var CategorySelectors = function (_React$Component) {
 	_inherits(CategorySelectors, _React$Component);
@@ -288,6 +319,8 @@ var CategorySelectors = function (_React$Component) {
 	}, {
 		key: 'render',
 		value: function render() {
+			var _this2 = this;
+
 			return _react2.default.createElement(
 				'fieldset',
 				null,
@@ -301,23 +334,25 @@ var CategorySelectors = function (_React$Component) {
 					null,
 					'Add some tags to your recipe to make it easier to find later. Make sure you only add the recipe to relevant categories!'
 				),
-				this.state.tags
+				this.props.categories.list.length ? this.props.categories.list.map(function (category, index) {
+					return _react2.default.createElement(_categoryOption2.default, { type: 'checkbox', value: category.name, id: category.id, label: category.name, key: index, setTags: _this2.props.setTags });
+				}) : _react2.default.createElement(
+					'p',
+					null,
+					'No categories found, please try again later or contact the app creator.'
+				)
 			);
 		}
 	}, {
 		key: '_getCategories',
 		value: function _getCategories() {
-			var _this2 = this;
+			var _this3 = this;
 
 			(0, _dataHandling.handleData)({
 				method: 'GET',
 				url: _constants.Urls.data.categories,
 				success: function success(categories) {
-					_this2.setState({
-						tags: categories.map(function (category, index) {
-							return _react2.default.createElement(_categoryOption2.default, { type: 'checkbox', value: category.name, id: category.id, label: category.name, key: index, setTags: _this2.props.setTags });
-						})
-					});
+					_this3.props.categoriesReceived(categories);
 				},
 				error: function error() {
 					// TODO user feedback
@@ -330,9 +365,9 @@ var CategorySelectors = function (_React$Component) {
 	return CategorySelectors;
 }(_react2.default.Component);
 
-exports.default = CategorySelectors;
+exports.default = (0, _reactRedux.connect)(_mapping.mapStateToProps, _mapping.mapDispatchToProps)(CategorySelectors);
 
-},{"../../config/constants":14,"../../data/data-handling":19,"./category-option":4,"react":505}],6:[function(require,module,exports){
+},{"../../config/constants":14,"../../config/mapping.js":15,"../../data/data-handling":19,"./category-option":4,"react":505,"react-redux":254}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1071,7 +1106,8 @@ var defaultState = {
         list: []
     },
     categories: {
-        list: []
+        list: [],
+        used: []
     }
 };
 
@@ -2136,9 +2172,14 @@ function categories() {
     var action = arguments[1];
 
     switch (action.type) {
-        case 'CATEGORIES_FOUND':
+        case 'CATEGORIES_RECEIVED':
             return _extends({}, state, {
                 list: action.categories
+            });
+            break;
+        case 'CATEGORIES_FOUND':
+            return _extends({}, state, {
+                used: action.categories
             });
             break;
         default:
