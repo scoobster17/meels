@@ -1,12 +1,19 @@
 .globalHeader {
 	border-bottom:1px solid black;
 	overflow:hidden;
-	padding:20px;
+	padding:0 20px;
+	position:relative;
 	> a {
 		border-right:1px solid black;
 		display: block;
 		float:left;
 		margin:0 20px 0 0;
-		padding:20px;
+		padding:20px 20px 20px 90px;
 	}
+	img {
+        display:inline-block;
+        left:20px;
+        position:absolute;
+        top:6px;
+    }
 }

@@ -1,13 +1,16 @@
 body {
+	background: #F6DFC3;
+	font-family: librefranklin;
 	font-size: 62.5%;
 }
 main {
 	padding:20px;
 }
 h1 {
-	@include font-size(4);
+	@include font-size(6);
+	font-family: dehuti;
 	font-weight:bold;
-	margin:0 0 .5em;
+	margin:0 0 .25em;
 }
 h2 {
 	@include font-size(2);
@@ -41,6 +44,20 @@ li {
 // to be revised
 a {
 	@include font-size(1.6);
+	text-decoration: none;
+	&:hover,
+	&:focus,
+	&:active {
+		text-decoration: underline;
+	}
+}
+.text-link {
+	text-decoration: underline;
+	&:hover,
+	&:focus,
+	&:active {
+		text-decoration: none;
+	}
 }
 .visibly-hidden {
 	left:-999em;

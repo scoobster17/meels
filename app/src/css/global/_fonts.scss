@@ -5,7 +5,56 @@
        url('../../../assets/fonts/icomoon/fonts/icomoon.woff2?12893200') format('woff2'),
        url('../../../assets/fonts/icomoon/fonts/icomoon.woff?12893200') format('woff'),
        url('../../../assets/fonts/icomoon/fonts/icomoon.ttf?12893200') format('truetype'),
-       url('../../../assets/fonts/icomoon/fonts/icomoon.svg?12893200#fontello') format('svg');
+       url('../../../assets/fonts/icomoon/fonts/icomoon.svg?12893200#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'dehuti';
+  src: url('../../../assets/fonts/dehuti/dehuti-book.eot?12893200');
+  src: url('../../../assets/fonts/dehuti/dehuti-book.eot?12893200#iefix') format('embedded-opentype'),
+       url('../../../assets/fonts/dehuti/dehuti-book.woff2?12893200') format('woff2'),
+       url('../../../assets/fonts/dehuti/dehuti-book.woff?12893200') format('woff'),
+       url('../../../assets/fonts/dehuti/dehuti-book.ttf?12893200') format('truetype'),
+       url('../../../assets/fonts/dehuti/dehuti-book.svg?12893200#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'dehuti';
+  src: url('../../../assets/fonts/dehuti/dehuti-bold.eot?12893200');
+  src: url('../../../assets/fonts/dehuti/dehuti-bold.eot?12893200#iefix') format('embedded-opentype'),
+       url('../../../assets/fonts/dehuti/dehuti-bold.woff2?12893200') format('woff2'),
+       url('../../../assets/fonts/dehuti/dehuti-bold.woff?12893200') format('woff'),
+       url('../../../assets/fonts/dehuti/dehuti-bold.ttf?12893200') format('truetype'),
+       url('../../../assets/fonts/dehuti/dehuti-bold.svg?12893200#icomoon') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'librefranklin';
+  src: url('../../../assets/fonts/librefranklin/librefranklin-regular.eot?12893200');
+  src: url('../../../assets/fonts/librefranklin/librefranklin-regular.eot?12893200#iefix') format('embedded-opentype'),
+       url('../../../assets/fonts/librefranklin/librefranklin-regular.woff2?12893200') format('woff2'),
+       url('../../../assets/fonts/librefranklin/librefranklin-regular.woff?12893200') format('woff'),
+       url('../../../assets/fonts/librefranklin/librefranklin-regular.ttf?12893200') format('truetype'),
+       url('../../../assets/fonts/librefranklin/librefranklin-regular.svg?12893200#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'librefranklin';
+  src: url('../../../assets/fonts/librefranklin/librefranklin-bold.eot?12893200');
+  src: url('../../../assets/fonts/librefranklin/librefranklin-bold.eot?12893200#iefix') format('embedded-opentype'),
+       url('../../../assets/fonts/librefranklin/librefranklin-bold.woff2?12893200') format('woff2'),
+       url('../../../assets/fonts/librefranklin/librefranklin-bold.woff?12893200') format('woff'),
+       url('../../../assets/fonts/librefranklin/librefranklin-bold.ttf?12893200') format('truetype'),
+       url('../../../assets/fonts/librefranklin/librefranklin-bold.svg?12893200#icomoon') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+
