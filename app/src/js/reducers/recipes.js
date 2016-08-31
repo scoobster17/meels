@@ -48,6 +48,14 @@ function recipes(state = {}, action) {
             }
             break;
 
+        // get recipe (details)
+        case 'RECIPE_RECEIVED':
+            return {
+                ...state,
+                currentRecipe: action.recipe
+            }
+            break;
+
         // fallback
         default:
             return state;

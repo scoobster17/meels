@@ -14,6 +14,34 @@ import Instruction from '../components/recipes/instruction';
 // Set the default state
 const defaultState = {
     recipes: {
+        currentRecipe: {
+            "cooking-time": {
+                days: 0,
+                hours: 0,
+                minutes: 0
+            },
+            description: '',
+            id: '',
+            ingredients: [
+                <Ingredient index="1" key="0" />
+            ],
+            instructions: [
+                <Instruction index="1" key="0" />
+            ],
+            name: '',
+            "prep-time": {
+                days: 0,
+                hours: 0,
+                minutes: 0
+            },
+            serves: 0,
+            tags: [],
+            "total-time": {
+                days: 0,
+                hours: 0,
+                minutes: 0
+            }
+        },
         ingredients: [
             <Ingredient index="1" key="0" />
         ],

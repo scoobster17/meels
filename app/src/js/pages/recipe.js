@@ -1,18 +1,12 @@
+// React dependencies
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 
-import {Urls} from '../config/constants';
-import {handleData} from '../data/data-handling';
+// App dependencies
+import { Urls } from '../config/constants';
+import { handleData } from '../data/data-handling';
 
 export default class RecipePage extends React.Component {
-
-	constructor() {
-		super();
-
-		this.state = {
-			recipe: {}
-		}
-	}
 
 	componentWillMount() {
 		var recipeToFindId = this.props.params.recipeId;
@@ -20,48 +14,51 @@ export default class RecipePage extends React.Component {
 	}
 
 	render() {
+
+		let recipe = this.props.recipes.currentRecipe;
+
 		return (
 			<main>
 				<dl>
 					<dt>Recipe Name</dt>
 						<dd>
 							<h1>
-								{this.state.recipe.name}
+								{recipe.name}
 							</h1>
 						</dd>
 					<dt>Description</dt>
 						<dd>
-							<p>{this.state.recipe.description}</p>
+							<p>{recipe.description}</p>
 						</dd>
 					<dt>Serves</dt>
 						<dd>
 							{
-								this.state.recipe.serves === 1 ?
-									this.state.recipe.serves + " person"
+								recipe.serves === 1 ?
+									recipe.serves + " person"
 								:
-									this.state.recipe.serves > 1 ?
-										this.state.recipe.serves + " people"
+									recipe.serves > 1 ?
+										recipe.serves + " people"
 									:
 									""
 							}
 						</dd>
 					<dt>Preparation time</dt>
 						<dd>
-							{this.state.recipe['prep-time'] && this.state.recipe['prep-time'].days !== "0" ? this.state.recipe['prep-time'].days + " days " : ""}
-							{this.state.recipe['prep-time'] && this.state.recipe['prep-time'].hours !== "0" ? this.state.recipe['prep-time'].hours + " hours " : ""}
-							{this.state.recipe['prep-time'] && this.state.recipe['prep-time'].minutes !== "0" ? this.state.recipe['prep-time'].minutes + " minutes" : ""}
+							{recipe['prep-time'] && recipe['prep-time'].days !== "0" ? recipe['prep-time'].days + " days " : ""}
+							{recipe['prep-time'] && recipe['prep-time'].hours !== "0" ? recipe['prep-time'].hours + " hours " : ""}
+							{recipe['prep-time'] && recipe['prep-time'].minutes !== "0" ? recipe['prep-time'].minutes + " minutes" : ""}
 						</dd>
 					<dt>Cooking time</dt>
 						<dd>
-							{this.state.recipe['cooking-time'] && this.state.recipe['cooking-time'].days !== "0" ? this.state.recipe['cooking-time'].days + " days " : ""}
-							{this.state.recipe['cooking-time'] && this.state.recipe['cooking-time'].hours !== "0" ? this.state.recipe['cooking-time'].hours + " hours " : ""}
-							{this.state.recipe['cooking-time'] && this.state.recipe['cooking-time'].minutes !== "0" ? this.state.recipe['cooking-time'].minutes + " minutes" : ""}
+							{recipe['cooking-time'] && recipe['cooking-time'].days !== "0" ? recipe['cooking-time'].days + " days " : ""}
+							{recipe['cooking-time'] && recipe['cooking-time'].hours !== "0" ? recipe['cooking-time'].hours + " hours " : ""}
+							{recipe['cooking-time'] && recipe['cooking-time'].minutes !== "0" ? recipe['cooking-time'].minutes + " minutes" : ""}
 						</dd>
 					<dt>Total time</dt>
 						<dd>
-							{this.state.recipe['total-time'] && this.state.recipe['total-time'].days !== "0" ? this.state.recipe['total-time'].days + " days " : ""}
-							{this.state.recipe['total-time'] && this.state.recipe['total-time'].hours !== "0" ? this.state.recipe['total-time'].hours + " hours " : ""}
-							{this.state.recipe['total-time'] && this.state.recipe['total-time'].minutes !== "0" ? this.state.recipe['total-time'].minutes + " minutes" : ""}
+							{recipe['total-time'] && recipe['total-time'].days !== "0" ? recipe['total-time'].days + " days " : ""}
+							{recipe['total-time'] && recipe['total-time'].hours !== "0" ? recipe['total-time'].hours + " hours " : ""}
+							{recipe['total-time'] && recipe['total-time'].minutes !== "0" ? recipe['total-time'].minutes + " minutes" : ""}
 						</dd>
 					<dt>
 						<h2>Ingredients</h2>
@@ -69,8 +66,8 @@ export default class RecipePage extends React.Component {
 						<dd>
 							<ul>
 								{
-									this.state.recipe.ingredients &&
-									this.state.recipe.ingredients.map((ingredient, index) => {
+									recipe.ingredients &&
+									recipe.ingredients.map((ingredient, index) => {
 										return <li key={index}>{ingredient.measure + ingredient.unit + " of " + ingredient.name}</li>
 									})
 								}
@@ -82,8 +79,8 @@ export default class RecipePage extends React.Component {
 						<dd>
 							<ol>
 								{
-									this.state.recipe.instructions &&
-									this.state.recipe.instructions.map((instruction, index) => {
+									recipe.instructions &&
+									recipe.instructions.map((instruction, index) => {
 										return <li key={index}>{instruction}</li>
 									})
 								}
@@ -93,8 +90,8 @@ export default class RecipePage extends React.Component {
 						<dd>
 							<ul>
 								{
-									this.state.recipe.tags &&
-									this.state.recipe.tags.map((tag, index) => {
+									recipe.tags &&
+									recipe.tags.map((tag, index) => {
 										return <li key={index}>{tag}</li>
 									})
 								}
@@ -116,9 +113,7 @@ export default class RecipePage extends React.Component {
 			method: 'GET',
 			url: Urls.data.base + "/recipes/" + recipeToFindId + ".json",
 			success: (recipeObj) => {
-				this.setState({
-					recipe: recipeObj
-				});
+				this.props.recipeReceived(recipeObj);
 			}
 		});
 	}

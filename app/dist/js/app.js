@@ -10,6 +10,7 @@ exports.addRecipeError = addRecipeError;
 exports.addIngredientToRecipe = addIngredientToRecipe;
 exports.addInstructionToRecipe = addInstructionToRecipe;
 exports.receivedRecipes = receivedRecipes;
+exports.recipeReceived = recipeReceived;
 exports.categoriesReceived = categoriesReceived;
 exports.categoriesFound = categoriesFound;
 exports.setSelectedTags = setSelectedTags;
@@ -55,6 +56,14 @@ function receivedRecipes(recipes) {
     return {
         type: 'RECEIVED_RECIPES',
         recipes: recipes
+    };
+}
+
+// recipe details
+function recipeReceived(recipe) {
+    return {
+        type: 'RECIPE_RECEIVED',
+        recipe: recipe
     };
 }
 
@@ -1134,6 +1143,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Set the default state
 var defaultState = {
     recipes: {
+        currentRecipe: {
+            "cooking-time": {
+                days: 0,
+                hours: 0,
+                minutes: 0
+            },
+            description: '',
+            id: '',
+            ingredients: [_react2.default.createElement(_ingredient2.default, { index: '1', key: '0' })],
+            instructions: [_react2.default.createElement(_instruction2.default, { index: '1', key: '0' })],
+            name: '',
+            "prep-time": {
+                days: 0,
+                hours: 0,
+                minutes: 0
+            },
+            serves: 0,
+            tags: [],
+            "total-time": {
+                days: 0,
+                hours: 0,
+                minutes: 0
+            }
+        },
         ingredients: [_react2.default.createElement(_ingredient2.default, { index: '1', key: '0' })],
         instructions: [_react2.default.createElement(_instruction2.default, { index: '1', key: '0' })],
         list: [],
@@ -1968,7 +2001,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // React dependencies
+
+
+// App dependencies
+
 
 var RecipePage = function (_React$Component) {
 	_inherits(RecipePage, _React$Component);
@@ -1976,12 +2013,7 @@ var RecipePage = function (_React$Component) {
 	function RecipePage() {
 		_classCallCheck(this, RecipePage);
 
-		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RecipePage).call(this));
-
-		_this.state = {
-			recipe: {}
-		};
-		return _this;
+		return _possibleConstructorReturn(this, Object.getPrototypeOf(RecipePage).apply(this, arguments));
 	}
 
 	_createClass(RecipePage, [{
@@ -1993,6 +2025,9 @@ var RecipePage = function (_React$Component) {
 	}, {
 		key: 'render',
 		value: function render() {
+
+			var recipe = this.props.recipes.currentRecipe;
+
 			return _react2.default.createElement(
 				'main',
 				null,
@@ -2010,7 +2045,7 @@ var RecipePage = function (_React$Component) {
 						_react2.default.createElement(
 							'h1',
 							null,
-							this.state.recipe.name
+							recipe.name
 						)
 					),
 					_react2.default.createElement(
@@ -2024,7 +2059,7 @@ var RecipePage = function (_React$Component) {
 						_react2.default.createElement(
 							'p',
 							null,
-							this.state.recipe.description
+							recipe.description
 						)
 					),
 					_react2.default.createElement(
@@ -2035,7 +2070,7 @@ var RecipePage = function (_React$Component) {
 					_react2.default.createElement(
 						'dd',
 						null,
-						this.state.recipe.serves === 1 ? this.state.recipe.serves + " person" : this.state.recipe.serves > 1 ? this.state.recipe.serves + " people" : ""
+						recipe.serves === 1 ? recipe.serves + " person" : recipe.serves > 1 ? recipe.serves + " people" : ""
 					),
 					_react2.default.createElement(
 						'dt',
@@ -2045,9 +2080,9 @@ var RecipePage = function (_React$Component) {
 					_react2.default.createElement(
 						'dd',
 						null,
-						this.state.recipe['prep-time'] && this.state.recipe['prep-time'].days !== "0" ? this.state.recipe['prep-time'].days + " days " : "",
-						this.state.recipe['prep-time'] && this.state.recipe['prep-time'].hours !== "0" ? this.state.recipe['prep-time'].hours + " hours " : "",
-						this.state.recipe['prep-time'] && this.state.recipe['prep-time'].minutes !== "0" ? this.state.recipe['prep-time'].minutes + " minutes" : ""
+						recipe['prep-time'] && recipe['prep-time'].days !== "0" ? recipe['prep-time'].days + " days " : "",
+						recipe['prep-time'] && recipe['prep-time'].hours !== "0" ? recipe['prep-time'].hours + " hours " : "",
+						recipe['prep-time'] && recipe['prep-time'].minutes !== "0" ? recipe['prep-time'].minutes + " minutes" : ""
 					),
 					_react2.default.createElement(
 						'dt',
@@ -2057,9 +2092,9 @@ var RecipePage = function (_React$Component) {
 					_react2.default.createElement(
 						'dd',
 						null,
-						this.state.recipe['cooking-time'] && this.state.recipe['cooking-time'].days !== "0" ? this.state.recipe['cooking-time'].days + " days " : "",
-						this.state.recipe['cooking-time'] && this.state.recipe['cooking-time'].hours !== "0" ? this.state.recipe['cooking-time'].hours + " hours " : "",
-						this.state.recipe['cooking-time'] && this.state.recipe['cooking-time'].minutes !== "0" ? this.state.recipe['cooking-time'].minutes + " minutes" : ""
+						recipe['cooking-time'] && recipe['cooking-time'].days !== "0" ? recipe['cooking-time'].days + " days " : "",
+						recipe['cooking-time'] && recipe['cooking-time'].hours !== "0" ? recipe['cooking-time'].hours + " hours " : "",
+						recipe['cooking-time'] && recipe['cooking-time'].minutes !== "0" ? recipe['cooking-time'].minutes + " minutes" : ""
 					),
 					_react2.default.createElement(
 						'dt',
@@ -2069,9 +2104,9 @@ var RecipePage = function (_React$Component) {
 					_react2.default.createElement(
 						'dd',
 						null,
-						this.state.recipe['total-time'] && this.state.recipe['total-time'].days !== "0" ? this.state.recipe['total-time'].days + " days " : "",
-						this.state.recipe['total-time'] && this.state.recipe['total-time'].hours !== "0" ? this.state.recipe['total-time'].hours + " hours " : "",
-						this.state.recipe['total-time'] && this.state.recipe['total-time'].minutes !== "0" ? this.state.recipe['total-time'].minutes + " minutes" : ""
+						recipe['total-time'] && recipe['total-time'].days !== "0" ? recipe['total-time'].days + " days " : "",
+						recipe['total-time'] && recipe['total-time'].hours !== "0" ? recipe['total-time'].hours + " hours " : "",
+						recipe['total-time'] && recipe['total-time'].minutes !== "0" ? recipe['total-time'].minutes + " minutes" : ""
 					),
 					_react2.default.createElement(
 						'dt',
@@ -2088,7 +2123,7 @@ var RecipePage = function (_React$Component) {
 						_react2.default.createElement(
 							'ul',
 							null,
-							this.state.recipe.ingredients && this.state.recipe.ingredients.map(function (ingredient, index) {
+							recipe.ingredients && recipe.ingredients.map(function (ingredient, index) {
 								return _react2.default.createElement(
 									'li',
 									{ key: index },
@@ -2112,7 +2147,7 @@ var RecipePage = function (_React$Component) {
 						_react2.default.createElement(
 							'ol',
 							null,
-							this.state.recipe.instructions && this.state.recipe.instructions.map(function (instruction, index) {
+							recipe.instructions && recipe.instructions.map(function (instruction, index) {
 								return _react2.default.createElement(
 									'li',
 									{ key: index },
@@ -2132,7 +2167,7 @@ var RecipePage = function (_React$Component) {
 						_react2.default.createElement(
 							'ul',
 							null,
-							this.state.recipe.tags && this.state.recipe.tags.map(function (tag, index) {
+							recipe.tags && recipe.tags.map(function (tag, index) {
 								return _react2.default.createElement(
 									'li',
 									{ key: index },
@@ -2163,9 +2198,7 @@ var RecipePage = function (_React$Component) {
 				method: 'GET',
 				url: _constants.Urls.data.base + "/recipes/" + recipeToFindId + ".json",
 				success: function success(recipeObj) {
-					_this2.setState({
-						recipe: recipeObj
-					});
+					_this2.props.recipeReceived(recipeObj);
 				}
 			});
 		}
@@ -2261,6 +2294,13 @@ function recipes() {
         case 'RECEIVED_RECIPES':
             return _extends({}, state, {
                 list: action.recipes
+            });
+            break;
+
+        // get recipe (details)
+        case 'RECIPE_RECEIVED':
+            return _extends({}, state, {
+                currentRecipe: action.recipe
             });
             break;
 

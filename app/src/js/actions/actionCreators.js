@@ -43,6 +43,14 @@ export function receivedRecipes(recipes) {
     }
 }
 
+// recipe details
+export function recipeReceived(recipe) {
+    return {
+        type: 'RECIPE_RECEIVED',
+        recipe
+    }
+}
+
 //////////////////////////////////////////////////
 // categories
 //////////////////////////////////////////////////
