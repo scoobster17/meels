@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 // App dependencies
 import { Urls } from '../config/constants';
 import { handleData } from '../data/data-handling';
+import Spinner from '../components/global/spinner';
 
 export default class RecipePage extends React.Component {
 
@@ -98,6 +99,9 @@ export default class RecipePage extends React.Component {
 							</ul>
 						</dd>
 				</dl>
+
+				{ this.props.recipes.fetchingRecipe && <Spinner /> }
+
 				<Link to="/newRecipe">
 					Add a new recipe
 				</Link>
@@ -109,6 +113,9 @@ export default class RecipePage extends React.Component {
 	}
 
 	_getRecipeDetails(recipeToFindId) {
+
+		this.props.fetchingRecipe();
+
 		handleData({
 			method: 'GET',
 			url: Urls.data.base + "/recipes/" + recipeToFindId + ".json",

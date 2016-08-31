@@ -50,10 +50,18 @@ function recipes(state = {}, action) {
             break;
 
         // get recipe (details)
+        case 'FETCHING_RECIPE':
+            return {
+                ...state,
+                fetchingRecipe: true
+            }
+            break;
+
         case 'RECIPE_RECEIVED':
             return {
                 ...state,
-                currentRecipe: action.recipe
+                currentRecipe: action.recipe,
+                fetchingRecipe: false
             }
             break;
 

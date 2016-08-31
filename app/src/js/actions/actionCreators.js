@@ -50,6 +50,12 @@ export function receivedRecipes(recipes) {
 }
 
 // recipe details
+export function fetchingRecipe() {
+    return {
+        type: 'FETCHING_RECIPE'
+    }
+}
+
 export function recipeReceived(recipe) {
     return {
         type: 'RECIPE_RECEIVED',

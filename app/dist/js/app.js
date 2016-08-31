@@ -11,6 +11,7 @@ exports.addIngredientToRecipe = addIngredientToRecipe;
 exports.addInstructionToRecipe = addInstructionToRecipe;
 exports.fetchingRecipes = fetchingRecipes;
 exports.receivedRecipes = receivedRecipes;
+exports.fetchingRecipe = fetchingRecipe;
 exports.recipeReceived = recipeReceived;
 exports.fetchingCategories = fetchingCategories;
 exports.categoriesReceived = categoriesReceived;
@@ -68,6 +69,12 @@ function receivedRecipes(recipes) {
 }
 
 // recipe details
+function fetchingRecipe() {
+    return {
+        type: 'FETCHING_RECIPE'
+    };
+}
+
 function recipeReceived(recipe) {
     return {
         type: 'RECIPE_RECEIVED',
@@ -2030,6 +2037,10 @@ var _constants = require('../config/constants');
 
 var _dataHandling = require('../data/data-handling');
 
+var _spinner = require('../components/global/spinner');
+
+var _spinner2 = _interopRequireDefault(_spinner);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2212,6 +2223,7 @@ var RecipePage = function (_React$Component) {
 						)
 					)
 				),
+				this.props.recipes.fetchingRecipe && _react2.default.createElement(_spinner2.default, null),
 				_react2.default.createElement(
 					_reactRouter.Link,
 					{ to: '/newRecipe' },
@@ -2229,6 +2241,8 @@ var RecipePage = function (_React$Component) {
 		value: function _getRecipeDetails(recipeToFindId) {
 			var _this2 = this;
 
+			this.props.fetchingRecipe();
+
 			(0, _dataHandling.handleData)({
 				method: 'GET',
 				url: _constants.Urls.data.base + "/recipes/" + recipeToFindId + ".json",
@@ -2244,7 +2258,7 @@ var RecipePage = function (_React$Component) {
 
 exports.default = RecipePage;
 
-},{"../config/constants":14,"../data/data-handling":19,"react":505,"react-router":300}],25:[function(require,module,exports){
+},{"../components/global/spinner":9,"../config/constants":14,"../data/data-handling":19,"react":505,"react-router":300}],25:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2341,9 +2355,16 @@ function recipes() {
             break;
 
         // get recipe (details)
+        case 'FETCHING_RECIPE':
+            return _extends({}, state, {
+                fetchingRecipe: true
+            });
+            break;
+
         case 'RECIPE_RECEIVED':
             return _extends({}, state, {
-                currentRecipe: action.recipe
+                currentRecipe: action.recipe,
+                fetchingRecipe: false
             });
             break;
 
