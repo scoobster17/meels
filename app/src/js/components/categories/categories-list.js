@@ -13,14 +13,6 @@ import { convertRecipesToArray } from '../../utilities/utilities';
 
 class CategoriesList extends React.Component {
 
-    constructor() {
-        super();
-
-        this.state = {
-            tags: []
-        }
-    }
-
     componentWillMount() {
         this._getTags();
     }
@@ -29,15 +21,18 @@ class CategoriesList extends React.Component {
         return (
             <ul>
                 {
-                    this.props.categories.list.sort().map((category, index) => {
-                        return (
-                            <li key={index}>
-                                <Link to={'/recipes?category=' + category.toLowerCase()}>
-                                    {category}
-                                </Link>
-                            </li>
-                        )
-                    })
+                    this.props.categories.list.length ?
+                        this.props.categories.list.sort().map((category, index) => {
+                            return (
+                                <li key={index}>
+                                    <Link to={'/recipes?category=' + category.toLowerCase()}>
+                                        {category}
+                                    </Link>
+                                </li>
+                            )
+                        })
+                    :
+                        <p>No categories used yet. Please make sure you assign categories to a recipe when adding.</p>
                 }
             </ul>
         )

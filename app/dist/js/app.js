@@ -108,12 +108,7 @@ var CategoriesList = function (_React$Component) {
     function CategoriesList() {
         _classCallCheck(this, CategoriesList);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CategoriesList).call(this));
-
-        _this.state = {
-            tags: []
-        };
-        return _this;
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(CategoriesList).apply(this, arguments));
     }
 
     _createClass(CategoriesList, [{
@@ -127,7 +122,7 @@ var CategoriesList = function (_React$Component) {
             return _react2.default.createElement(
                 'ul',
                 null,
-                this.props.categories.list.sort().map(function (category, index) {
+                this.props.categories.list.length ? this.props.categories.list.sort().map(function (category, index) {
                     return _react2.default.createElement(
                         'li',
                         { key: index },
@@ -137,7 +132,11 @@ var CategoriesList = function (_React$Component) {
                             category
                         )
                     );
-                })
+                }) : _react2.default.createElement(
+                    'p',
+                    null,
+                    'No categories used yet. Please make sure you assign categories to a recipe when adding.'
+                )
             );
         }
     }, {
