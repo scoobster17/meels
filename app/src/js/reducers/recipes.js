@@ -27,6 +27,12 @@ function recipes(state = {}, action) {
                 selectedTags: action.tags
             }
             break;
+        case 'ADD_RECIPE_INGREDIENT':
+            return {
+                ...state,
+                ingredients: [...state.ingredients, action.ingredient]
+            }
+            break;
 
         // get recipes
         case 'RECEIVED_RECIPES':

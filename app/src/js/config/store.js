@@ -1,16 +1,25 @@
 // React dependencies
+import React from 'react';
 import { browserHistory } from 'react-router';
 
 // Redux dependencies
 import { createStore, compose } from 'redux';
 import { syncHistoryWithStore } from 'react-router-redux';
 
-// Reducers
+// App dependencies
 import rootReducer from '../reducers/root';
+import Ingredient from '../components/recipes/ingredient';
+import Instruction from '../components/recipes/instruction';
 
 // Set the default state
 const defaultState = {
     recipes: {
+        ingredients: [
+            <Ingredient index="1" key="0" />
+        ],
+        instructions: [
+            <Instruction index="1" key="0" />
+        ],
         list: [],
         selectedTags: [],
     },

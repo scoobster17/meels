@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.requestAddRecipe = requestAddRecipe;
 exports.addRecipeSuccess = addRecipeSuccess;
 exports.addRecipeError = addRecipeError;
+exports.addIngredientToRecipe = addIngredientToRecipe;
 exports.receivedRecipes = receivedRecipes;
 exports.categoriesReceived = categoriesReceived;
 exports.categoriesFound = categoriesFound;
@@ -31,6 +32,13 @@ function addRecipeSuccess() {
 function addRecipeError() {
     return {
         type: 'ADD_RECIPE_ERROR'
+    };
+}
+
+function addIngredientToRecipe(ingredient) {
+    return {
+        type: 'ADD_RECIPE_INGREDIENT',
+        ingredient: ingredient
     };
 }
 
@@ -1091,6 +1099,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.history = undefined;
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
 var _reactRouter = require('react-router');
 
 var _redux = require('redux');
@@ -1101,12 +1113,21 @@ var _root = require('../reducers/root');
 
 var _root2 = _interopRequireDefault(_root);
 
+var _ingredient = require('../components/recipes/ingredient');
+
+var _ingredient2 = _interopRequireDefault(_ingredient);
+
+var _instruction = require('../components/recipes/instruction');
+
+var _instruction2 = _interopRequireDefault(_instruction);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Set the default state
-// React dependencies
 var defaultState = {
     recipes: {
+        ingredients: [_react2.default.createElement(_ingredient2.default, { index: '1', key: '0' })],
+        instructions: [_react2.default.createElement(_instruction2.default, { index: '1', key: '0' })],
         list: [],
         selectedTags: []
     },
@@ -1119,10 +1140,11 @@ var defaultState = {
 // Enable Redux Dev Tools
 
 
-// Reducers
+// App dependencies
 
 
 // Redux dependencies
+// React dependencies
 var enhancers = (0, _redux.compose)(window.devToolsExtension ? window.devToolsExtension() : function (f) {
     return f;
 });
@@ -1135,7 +1157,7 @@ var history = exports.history = (0, _reactRouterRedux.syncHistoryWithStore)(_rea
 
 exports.default = store;
 
-},{"../reducers/root":27,"react-router":300,"react-router-redux":267,"redux":511}],18:[function(require,module,exports){
+},{"../components/recipes/ingredient":10,"../components/recipes/instruction":11,"../reducers/root":27,"react":505,"react-router":300,"react-router-redux":267,"redux":511}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1287,10 +1309,6 @@ var AddPage = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AddPage).call(this));
 
-        _this.state = {
-            ingredients: [_react2.default.createElement(_ingredient2.default, { index: '1', key: '0' })],
-            instructions: [_react2.default.createElement(_instruction2.default, { index: '1', key: '0' })]
-        };
         _this._saveRecipe = _this._saveRecipe.bind(_this);
         _this._setTags = _this._setTags.bind(_this);
         _this._addIngredient = _this._addIngredient.bind(_this);
@@ -1504,7 +1522,7 @@ var AddPage = function (_React$Component) {
                             null,
                             'Ingredients'
                         ),
-                        this.state.ingredients,
+                        this.props.recipes.ingredients,
                         _react2.default.createElement(
                             'button',
                             { id: 'addIngredient', onClick: this._addIngredient },
@@ -1519,7 +1537,7 @@ var AddPage = function (_React$Component) {
                             null,
                             'Instructions'
                         ),
-                        this.state.instructions,
+                        this.props.recipes.instructions,
                         _react2.default.createElement(
                             'button',
                             { id: 'addInstruction', onClick: this._addInstruction },
@@ -1579,13 +1597,8 @@ var AddPage = function (_React$Component) {
         key: '_addIngredient',
         value: function _addIngredient(event) {
             event.preventDefault();
-            var newIngredients = this.state.ingredients;
-            var noOfIngredients = newIngredients.length;
-            newIngredients[noOfIngredients] = _react2.default.createElement(_ingredient2.default, { index: noOfIngredients + 1, key: noOfIngredients });
-
-            this.setState({
-                ingredients: newIngredients
-            });
+            var noOfIngredients = this.props.recipes.ingredients.length;
+            this.props.addIngredientToRecipe(_react2.default.createElement(_ingredient2.default, { index: noOfIngredients + 1, key: noOfIngredients }));
         }
     }, {
         key: '_addInstruction',
@@ -2200,6 +2213,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function recipes() {
     var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
     var action = arguments[1];
@@ -2226,6 +2241,11 @@ function recipes() {
         case 'UPDATE_SELECTED_TAGS':
             return _extends({}, state, {
                 selectedTags: action.tags
+            });
+            break;
+        case 'ADD_RECIPE_INGREDIENT':
+            return _extends({}, state, {
+                ingredients: [].concat(_toConsumableArray(state.ingredients), [action.ingredient])
             });
             break;
 

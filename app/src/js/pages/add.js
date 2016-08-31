@@ -17,14 +17,6 @@ class AddPage extends React.Component {
 	constructor() {
 		super();
 
-		this.state = {
-            ingredients: [
-                <Ingredient index="1" key="0" />
-            ],
-            instructions: [
-                <Instruction index="1" key="0" />
-            ]
-		}
 		this._saveRecipe = this._saveRecipe.bind(this);
         this._setTags = this._setTags.bind(this);
         this._addIngredient = this._addIngredient.bind(this);
@@ -124,12 +116,12 @@ class AddPage extends React.Component {
 	    				</fieldset>
                         <fieldset id="ingredients">
                             <h2>Ingredients</h2>
-                            {this.state.ingredients}
+                            {this.props.recipes.ingredients}
                             <button id="addIngredient" onClick={this._addIngredient}>Add ingredient to recipe</button>
                         </fieldset>
                         <fieldset id="instructions">
                             <h2>Instructions</h2>
-                            {this.state.instructions}
+                            {this.props.recipes.instructions}
                             <button id="addInstruction" onClick={this._addInstruction}>Add instruction to recipe</button>
                         </fieldset>
 
@@ -187,13 +179,8 @@ class AddPage extends React.Component {
 
     _addIngredient(event) {
         event.preventDefault();
-        let newIngredients = this.state.ingredients;
-        const noOfIngredients = newIngredients.length;
-        newIngredients[noOfIngredients] = <Ingredient index={noOfIngredients + 1} key={noOfIngredients} />
-
-        this.setState({
-            ingredients: newIngredients
-        })
+        const noOfIngredients = this.props.recipes.ingredients.length;
+        this.props.addIngredientToRecipe(<Ingredient index={noOfIngredients + 1} key={noOfIngredients} />);
     }
 
     _addInstruction(event) {

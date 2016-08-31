@@ -21,6 +21,13 @@ export function addRecipeError() {
     }
 }
 
+export function addIngredientToRecipe(ingredient) {
+    return {
+        type: 'ADD_RECIPE_INGREDIENT',
+        ingredient
+    }
+}
+
 // recipes list
 export function receivedRecipes(recipes) {
     return {
