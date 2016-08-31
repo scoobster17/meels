@@ -33,6 +33,12 @@ function recipes(state = {}, action) {
                 ingredients: [...state.ingredients, action.ingredient]
             }
             break;
+        case 'ADD_RECIPE_INSTRUCTION':
+            return {
+                ...state,
+                instructions: [...state.instructions, action.instruction]
+            }
+            break;
 
         // get recipes
         case 'RECEIVED_RECIPES':

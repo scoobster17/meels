@@ -180,18 +180,17 @@ class AddPage extends React.Component {
     _addIngredient(event) {
         event.preventDefault();
         const noOfIngredients = this.props.recipes.ingredients.length;
-        this.props.addIngredientToRecipe(<Ingredient index={noOfIngredients + 1} key={noOfIngredients} />);
+        this.props.addIngredientToRecipe(
+            <Ingredient index={noOfIngredients + 1} key={noOfIngredients} />
+        );
     }
 
     _addInstruction(event) {
         event.preventDefault();
-        let newInstructions = this.state.instructions;
-        const noOfInstructions = newInstructions.length;
-        newInstructions[noOfInstructions] = <Instruction index={noOfInstructions + 1} key={noOfInstructions} />
-
-        this.setState({
-            instructions: newInstructions
-        })
+        const noOfInstructions = this.props.recipes.instructions.length;
+        this.props.addInstructionToRecipe(
+            <Instruction index={noOfInstructions + 1} key={noOfInstructions} />
+        );
     }
 
     _resetForm() {

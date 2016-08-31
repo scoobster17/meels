@@ -28,6 +28,13 @@ export function addIngredientToRecipe(ingredient) {
     }
 }
 
+export function addInstructionToRecipe(instruction) {
+    return {
+        type: 'ADD_RECIPE_INSTRUCTION',
+        instruction
+    }
+}
+
 // recipes list
 export function receivedRecipes(recipes) {
     return {

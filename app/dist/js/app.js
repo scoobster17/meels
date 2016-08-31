@@ -8,6 +8,7 @@ exports.requestAddRecipe = requestAddRecipe;
 exports.addRecipeSuccess = addRecipeSuccess;
 exports.addRecipeError = addRecipeError;
 exports.addIngredientToRecipe = addIngredientToRecipe;
+exports.addInstructionToRecipe = addInstructionToRecipe;
 exports.receivedRecipes = receivedRecipes;
 exports.categoriesReceived = categoriesReceived;
 exports.categoriesFound = categoriesFound;
@@ -39,6 +40,13 @@ function addIngredientToRecipe(ingredient) {
     return {
         type: 'ADD_RECIPE_INGREDIENT',
         ingredient: ingredient
+    };
+}
+
+function addInstructionToRecipe(instruction) {
+    return {
+        type: 'ADD_RECIPE_INSTRUCTION',
+        instruction: instruction
     };
 }
 
@@ -1604,13 +1612,8 @@ var AddPage = function (_React$Component) {
         key: '_addInstruction',
         value: function _addInstruction(event) {
             event.preventDefault();
-            var newInstructions = this.state.instructions;
-            var noOfInstructions = newInstructions.length;
-            newInstructions[noOfInstructions] = _react2.default.createElement(_instruction2.default, { index: noOfInstructions + 1, key: noOfInstructions });
-
-            this.setState({
-                instructions: newInstructions
-            });
+            var noOfInstructions = this.props.recipes.instructions.length;
+            this.props.addInstructionToRecipe(_react2.default.createElement(_instruction2.default, { index: noOfInstructions + 1, key: noOfInstructions }));
         }
     }, {
         key: '_resetForm',
@@ -2246,6 +2249,11 @@ function recipes() {
         case 'ADD_RECIPE_INGREDIENT':
             return _extends({}, state, {
                 ingredients: [].concat(_toConsumableArray(state.ingredients), [action.ingredient])
+            });
+            break;
+        case 'ADD_RECIPE_INSTRUCTION':
+            return _extends({}, state, {
+                instructions: [].concat(_toConsumableArray(state.instructions), [action.instruction])
             });
             break;
 
