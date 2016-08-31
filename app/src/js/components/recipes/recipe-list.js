@@ -9,6 +9,7 @@ import { mapStateToProps, mapDispatchToProps } from '../../config/mapping.js';
 import {Urls} from '../../config/constants';
 import {handleData} from '../../data/data-handling';
 import RecipePreview from './recipe-preview';
+import { convertRecipesToArray } from '../../utilities/utilities';
 
 class RecipeList extends React.Component {
 
@@ -24,24 +25,16 @@ class RecipeList extends React.Component {
             success: (recipes) => {
 
                 let recipesToShow = [];
-
-                // check returned as array, if not convert to array
-                if (!Array.isArray(recipes)) {
-                    for (var recipe in recipes) {
-                        recipesToShow.push(recipes[recipe]);
-                    }
-                    recipes = recipesToShow;
-                }
+                let recipesArray = convertRecipesToArray(recipes);
 
                 // filter results if a filter value is supplied
                 if (this.props.filter !== '') {
 
                     // loop through each recipe object to check for filter category
-                    let noOfRecipes = recipes.length;
-                    let recipesToShow = []; // reset after above
+                    let noOfRecipes = recipesArray.length;
                     for (let i=0; i<noOfRecipes; i++) {
 
-                        const currentRecipe = recipes[i];
+                        const currentRecipe = recipesArray[i];
 
                         // check if any tag matches the filter category
                         const checkTagsForFilterCategory = (tag) => {
@@ -56,12 +49,12 @@ class RecipeList extends React.Component {
                     }
 
                     // only pass filtered recipes
-                    recipes = recipesToShow;
+                    recipesArray = recipesToShow;
 
                 }
 
                 // pass recipes to state
-                this.props.receivedRecipes(recipes);
+                this.props.receivedRecipes(recipesArray);
 
             },
             error: () => {
