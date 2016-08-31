@@ -1,9 +1,9 @@
 function categories(state = {}, action) {
     switch (action.type) {
-        case 'GET':
+        case 'CATEGORIES_FOUND':
             return {
                 ...state,
-                waitingForAddCategoryResponse: true
+                list: action.categories
             }
             break;
         default:

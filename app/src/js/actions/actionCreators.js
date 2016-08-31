@@ -22,3 +22,10 @@ export function receivedRecipes(recipes) {
         recipes
     }
 }
+
+export function categoriesFound(categories) {
+    return {
+        type: 'CATEGORIES_FOUND',
+        categories
+    }
+}

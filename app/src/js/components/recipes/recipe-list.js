@@ -24,14 +24,15 @@ class RecipeList extends React.Component {
             url: Urls.data.recipes,
             success: (recipes) => {
 
-                let recipesToShow = [];
                 let recipesArray = convertRecipesToArray(recipes);
 
                 // filter results if a filter value is supplied
                 if (this.props.filter !== '') {
 
-                    // loop through each recipe object to check for filter category
+                    let recipesToShow = [];
                     let noOfRecipes = recipesArray.length;
+
+                    // loop through each recipe object to check for filter category
                     for (let i=0; i<noOfRecipes; i++) {
 
                         const currentRecipe = recipesArray[i];

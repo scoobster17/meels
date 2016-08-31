@@ -13,7 +13,9 @@ const defaultState = {
     recipes: {
         list: []
     },
-    categories: {}
+    categories: {
+        list: []
+    }
 }
 
 // Enable Redux Dev Tools

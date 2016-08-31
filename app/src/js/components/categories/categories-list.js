@@ -1,10 +1,17 @@
+// React dependencies
 import React from 'react';
 import {Link} from 'react-router';
 
+// Redux dependencies
+import { connect } from 'react-redux';
+import { mapStateToProps, mapDispatchToProps } from '../../config/mapping.js';
+
+// App dependencies
 import {Urls} from '../../config/constants';
 import {handleData} from '../../data/data-handling';
+import { convertRecipesToArray } from '../../utilities/utilities';
 
-export default class CategoriesList extends React.Component {
+class CategoriesList extends React.Component {
 
     constructor() {
         super();
@@ -21,7 +28,17 @@ export default class CategoriesList extends React.Component {
     render() {
         return (
             <ul>
-                {this.state.tags}
+                {
+                    this.props.categories.list.sort().map((category, index) => {
+                        return (
+                            <li key={index}>
+                                <Link to={'/recipes?category=' + category.toLowerCase()}>
+                                    {category}
+                                </Link>
+                            </li>
+                        )
+                    })
+                }
             </ul>
         )
     }
@@ -34,13 +51,14 @@ export default class CategoriesList extends React.Component {
             url: Urls.data.recipes,
             success: (recipes) => {
 
-                const noOfRecipes = recipes.length;
+                const recipesArray = convertRecipesToArray(recipes);
+                const noOfRecipes = recipesArray.length;
                 let categoriesFound = [];
 
                 // loop through each recipe object to make a list of categories
                 for (let i=0; i<noOfRecipes; i++) {
 
-                    const currentRecipe = recipes[i];
+                    const currentRecipe = recipesArray[i];
                     const noOfTags = currentRecipe.tags.length;
 
                     // check if each tag is yet accounted for
@@ -54,18 +72,9 @@ export default class CategoriesList extends React.Component {
                     }
                 }
 
-                // render list based on tags used
-                this.setState({
-                    tags: categoriesFound.sort().map((category, index) => {
-                        return (
-                            <li key={index}>
-                                <Link to={'/recipes?category=' + category.toLowerCase()}>
-                                    {category}
-                                </Link>
-                            </li>
-                        )
-                    })
-                })
+                // update the state with categories
+                this.props.categoriesFound(categoriesFound);
+
             },
             error: () => {
                 // user friendly error to be implemented
@@ -74,3 +83,5 @@ export default class CategoriesList extends React.Component {
         });
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesList);
