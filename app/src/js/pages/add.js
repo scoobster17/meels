@@ -10,6 +10,7 @@ import Option from '../components/global/option';
 import Spinner from '../components/global/spinner';
 import Ingredient from '../components/recipes/ingredient';
 import Instruction from '../components/recipes/instruction';
+import { v4 } from 'node-uuid';
 
 class AddPage extends React.Component {
 
@@ -17,7 +18,6 @@ class AddPage extends React.Component {
 		super();
 
 		this.state = {
-			noOfRecipes: 0,
             recipeAdded: false,
 			selectedTags: [],
             ingredients: [
@@ -31,10 +31,6 @@ class AddPage extends React.Component {
         this._setTags = this._setTags.bind(this);
         this._addIngredient = this._addIngredient.bind(this);
         this._addInstruction = this._addInstruction.bind(this);
-	}
-
-	componentWillMount() {
-		this._getRecipes();
 	}
 
 	render() {
@@ -163,20 +159,6 @@ class AddPage extends React.Component {
 		)
 	}
 
-	_getRecipes() {
-
-        // perform request for recipes data
-        handleData({
-            method: 'GET',
-            url: Urls.data.recipes,
-            success: (recipesObj) => {
-                this.setState({
-                    noOfRecipes: recipesObj.length
-                });
-            }
-        });
-	}
-
 	_setTags(event) {
 
 		const checkbox = event.target;
@@ -237,8 +219,10 @@ class AddPage extends React.Component {
 
         event.preventDefault();
 
+        const recipeId = v4();
+
         let recipeData = {
-            id: this.state.noOfRecipes,
+            id: recipeId,
             name: this.refs.recipeName.value,
             description: this.refs.description.value,
             serves: this.refs.serves.value,
@@ -253,9 +237,9 @@ class AddPage extends React.Component {
                 minutes: this.refs['cooking-minutes'].value
             },
             'total-time': {
-                days: this.refs['total-days'].value,
-                hours: this.refs['total-hours'].value,
-                minutes: this.refs['total-minutes'].value
+                days: parseInt(this.refs['prep-days'].value) + parseInt(this.refs['cooking-days'].value),
+                hours: parseInt(this.refs['prep-hours'].value) + parseInt(this.refs['cooking-hours'].value),
+                minutes: parseInt(this.refs['prep-minutes'].value) + parseInt(this.refs['cooking-minutes'].value)
             },
             ingredients: [],
             instructions: [],
@@ -285,11 +269,11 @@ class AddPage extends React.Component {
         // perform request for recipes data
         handleData({
             method: 'PUT',
-            url: Urls.data.base + "/recipes/" + this.state.noOfRecipes + ".json",
+            url: Urls.data.base + "/recipes/" + recipeId + ".json",
 			data: JSON.stringify(recipeData),
 			success: () => {
                 this.props.addRecipeSuccess();
-                _resetForm();
+                this._resetForm();
 			},
             error: () => {
                 // to add feedback message to user
