@@ -1,5 +1,11 @@
 function categories(state = {}, action) {
     switch (action.type) {
+        case 'FETCHING_CATEGORIES':
+            return {
+                ...state,
+                fetchingCategories: true
+            }
+            break;
         case 'CATEGORIES_RECEIVED':
             return {
                 ...state,
@@ -9,7 +15,8 @@ function categories(state = {}, action) {
         case 'CATEGORIES_FOUND':
             return {
                 ...state,
-                used: action.categories
+                used: action.categories,
+                fetchingCategories: false
             }
             break;
         default:

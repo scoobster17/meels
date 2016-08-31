@@ -10,6 +10,7 @@ import { mapStateToProps, mapDispatchToProps } from '../../config/mapping.js';
 import { Urls } from '../../config/constants';
 import { handleData } from '../../data/data-handling';
 import { convertRecipesToArray } from '../../utilities/utilities';
+import Spinner from '../global/spinner';
 
 class CategoriesList extends React.Component {
 
@@ -34,11 +35,14 @@ class CategoriesList extends React.Component {
                     :
                         <p>No categories used yet. Please make sure you assign categories to a recipe when adding.</p>
                 }
+                { this.props.categories.fetchingCategories && <Spinner /> }
             </ul>
         )
     }
 
     _getTags() {
+
+        this.props.fetchingCategories();
 
         // perform request for recipes data
         handleData({

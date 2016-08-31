@@ -12,6 +12,7 @@ exports.addInstructionToRecipe = addInstructionToRecipe;
 exports.fetchingRecipes = fetchingRecipes;
 exports.receivedRecipes = receivedRecipes;
 exports.recipeReceived = recipeReceived;
+exports.fetchingCategories = fetchingCategories;
 exports.categoriesReceived = categoriesReceived;
 exports.categoriesFound = categoriesFound;
 exports.setSelectedTags = setSelectedTags;
@@ -79,6 +80,12 @@ function recipeReceived(recipe) {
 //////////////////////////////////////////////////
 
 // categories list
+function fetchingCategories() {
+    return {
+        type: 'FETCHING_CATEGORIES'
+    };
+}
+
 function categoriesReceived(categories) {
     return {
         type: 'CATEGORIES_RECEIVED',
@@ -148,6 +155,10 @@ var _dataHandling = require('../../data/data-handling');
 
 var _utilities = require('../../utilities/utilities');
 
+var _spinner = require('../global/spinner');
+
+var _spinner2 = _interopRequireDefault(_spinner);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -197,13 +208,16 @@ var CategoriesList = function (_React$Component) {
                     'p',
                     null,
                     'No categories used yet. Please make sure you assign categories to a recipe when adding.'
-                )
+                ),
+                this.props.categories.fetchingCategories && _react2.default.createElement(_spinner2.default, null)
             );
         }
     }, {
         key: '_getTags',
         value: function _getTags() {
             var _this2 = this;
+
+            this.props.fetchingCategories();
 
             // perform request for recipes data
             (0, _dataHandling.handleData)({
@@ -247,7 +261,7 @@ var CategoriesList = function (_React$Component) {
 
 exports.default = (0, _reactRedux.connect)(_mapping.mapStateToProps, _mapping.mapDispatchToProps)(CategoriesList);
 
-},{"../../config/constants":14,"../../config/mapping.js":15,"../../data/data-handling":19,"../../utilities/utilities":28,"react":505,"react-redux":254,"react-router":300}],4:[function(require,module,exports){
+},{"../../config/constants":14,"../../config/mapping.js":15,"../../data/data-handling":19,"../../utilities/utilities":28,"../global/spinner":9,"react":505,"react-redux":254,"react-router":300}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2237,6 +2251,11 @@ function categories() {
     var action = arguments[1];
 
     switch (action.type) {
+        case 'FETCHING_CATEGORIES':
+            return _extends({}, state, {
+                fetchingCategories: true
+            });
+            break;
         case 'CATEGORIES_RECEIVED':
             return _extends({}, state, {
                 list: action.categories
@@ -2244,7 +2263,8 @@ function categories() {
             break;
         case 'CATEGORIES_FOUND':
             return _extends({}, state, {
-                used: action.categories
+                used: action.categories,
+                fetchingCategories: false
             });
             break;
         default:

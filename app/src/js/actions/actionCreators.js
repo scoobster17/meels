@@ -62,6 +62,12 @@ export function recipeReceived(recipe) {
 //////////////////////////////////////////////////
 
 // categories list
+export function fetchingCategories() {
+    return {
+        type: 'FETCHING_CATEGORIES'
+    }
+}
+
 export function categoriesReceived(categories) {
     return {
         type: 'CATEGORIES_RECEIVED',
